@@ -17,19 +17,22 @@ fileName = open('logFile.txt','w+')
 # Our loop
 for i in range(5):
 
+    currentTotpValue = totp.now()
+    currentTime = datetime.datetime.now()
+
     # Print the TOTP in console
-    print(totp.now())
+    print(currentTotpValue)
     # Write the TOTP to the log file
-    fileName.write('Code is ' + str(totp.now()) + '\n')
+    fileName.write('Code is ' + str(currentTotpValue + '\n'))
 
 
     # Print the time in console
-    print(datetime.datetime.now())
+    print(currentTime)
     # Write the time to the log file
-    fileName.write('Time is ' + str(datetime.datetime.now()) + '\n')
+    fileName.write('Time is ' + str(currentTime) + '\n')
 
     # Create the QR image
-    qVar = pyqrcode.create(str(totp.now()))
+    qVar = pyqrcode.create(str(currentTotpValue))
     qVar.png('currentImage.png',scale=30)
 
     # Tell the user the image was created
