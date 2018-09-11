@@ -6,6 +6,8 @@ import pyqrcode
 
 from PIL import Image
 
+import os
+
 
 secret = 'ABCDEFGHIJKLMNOP'
 totp = pyotp.TOTP(secret)
@@ -28,8 +30,12 @@ for i in range(5):
 
     print('QR image generated')
 
-    with Image.open('currentImage.png') as img:
-        img.show()
+    os.system('feh currentImage.png 2>&1 &')
+    
+    #with Image.open('currentImage.png') as img:
+    #    print('BEFORE Command to open image')
+    #    img.show()
+    #    print('AFTER Command to open image')
 
     time.sleep(30)
 
