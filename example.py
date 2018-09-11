@@ -20,7 +20,7 @@ for i in range(5):
     currentTime = datetime.datetime.now()
 
     print(currentTotpValue)
-    fileName.write('Code is ' + str(currentTotpValue + '\n'))
+    fileName.write('Code is ' + str(currentTotpValue) + '\n')
 
     print(currentTime)
     fileName.write('Time is ' + str(currentTime) + '\n')
