@@ -29,6 +29,17 @@ def setInnerString(secret, chunkedTime):
 
 def returnTheHash(secretInput, periodInput):
 
+    """
+    This algorithm is a variation of the one found here:
+    https://garbagecollected.org/2014/09/14/how-google-authenticator-works/
+    
+    From that page:
+    original_secret = xxxx xxxx xxxx xxxx xxxx xxxx xxxx xxxx
+    secret = BASE32_DECODE(TO_UPPERCASE(REMOVE_SPACES(original_secret)))
+    input = CURRENT_UNIX_TIME() / 30
+    hmac = SHA1(secret + SHA1(secret + input))
+    """
+
     secret = setSecret(secretInput)
 
     period = setPeriod(periodInput)
@@ -36,7 +47,7 @@ def returnTheHash(secretInput, periodInput):
     chunkedTime = getChunkedTime(period)
 
     hasedSecret = hashTheInput(secret)
-    
+
     hexDigestOfSecret = hasedSecret.hexdigest()
 
     innerString = setInnerString(secret, chunkedTime)
