@@ -30,12 +30,14 @@ for i in range(5):
 
     print('QR image generated')
 
-    os.system('feh currentImage.png 2>&1 &')
+    # Use this for RasbPi
+    #os.system('feh currentImage.png 2>&1 &')
     
-    #with Image.open('currentImage.png') as img:
-    #    print('BEFORE Command to open image')
-    #    img.show()
-    #    print('AFTER Command to open image')
+    # Use this for macOS
+    with Image.open('currentImage.png') as img:
+       print('BEFORE Command to open image')
+       img.show()
+       print('AFTER Command to open image')
 
     time.sleep(30)
 
