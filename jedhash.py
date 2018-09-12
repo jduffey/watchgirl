@@ -3,10 +3,6 @@ import datetime
 import time
 
 
-# secretStringCONSTANT = 'ABCDEFGHIJKLMNOP'
-# periodIntegerCONSTANT = 1
-
-
 def setSecret(secretString):
     secretString = secretString
     return secretString
