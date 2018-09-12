@@ -1,0 +1,3 @@
+import hashtest
+
+hashtest.main()
