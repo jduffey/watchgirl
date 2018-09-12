@@ -3,11 +3,9 @@ import datetime
 import time
 
 
-
-""" CONSTANTS """
 secretStringCONSTANT = 'ABCDEFGHIJKLMNOP'
 periodIntegerCONSTANT = 1
-""" CONSTANTS END """
+
 
 def setSecret(secretString):
     secretString = secretString
@@ -35,44 +33,27 @@ def setInnerString(secret, chunkedTime):
 
 def main():
 
-    print()
-    print('*** BEGIN ***')
-    print()
-
-# Set and print the secret
     secret = setSecret(secretStringCONSTANT)
     print('Secret:               ' + secret)
 
-# Set the period
     period = setPeriod(periodIntegerCONSTANT)
 
-# Assign and print chunked time
     chunkedTime = getChunkedTime(period)
     print('Chunked time:         ' + str(chunkedTime))
 
-# Hash the secret and print the digest (NOT RELEVANT TO FINAL PRODUCT)
     hasedSecret = hashTheInput(secret)
     hexDigestOfSecret = hasedSecret.hexdigest()
     print('SHA256 secret digest: ' + str(hexDigestOfSecret))
 
-# Set inner string
     innerString = setInnerString(secret, chunkedTime)
 
-# Operations for inner hash
     shaInner = hashTheInput(innerString)
 
-# Print inner string and digest (NOT RELEVANT TO FINAL PRODUCT)
     print('innerString:          ' + innerString)
     hashedInnerAsHex = shaInner.hexdigest()
     print('Inner hash:           ' + str(hashedInnerAsHex))
 
-# Operations for outer hash
     shaOuter = hashTheInput(secret + hashedInnerAsHex)
 
-# Print the outer digest
     outerHexDigest = shaOuter.hexdigest()
     print('Outer hash:           ' + outerHexDigest)
-
-    print()
-    print('*** END ***')
-    print()
