@@ -3,8 +3,8 @@ import datetime
 import time
 
 
-secretStringCONSTANT = 'ABCDEFGHIJKLMNOP'
-periodIntegerCONSTANT = 1
+# secretStringCONSTANT = 'ABCDEFGHIJKLMNOP'
+# periodIntegerCONSTANT = 1
 
 
 def setSecret(secretString):
@@ -31,12 +31,12 @@ def setInnerString(secret, chunkedTime):
     innerString = secret + str(chunkedTime)
     return innerString
 
-def main():
+def main(secretInput, periodInput):
 
-    secret = setSecret(secretStringCONSTANT)
+    secret = setSecret(secretInput)
     print('Secret:               ' + secret)
 
-    period = setPeriod(periodIntegerCONSTANT)
+    period = setPeriod(periodInput)
 
     chunkedTime = getChunkedTime(period)
     print('Chunked time:         ' + str(chunkedTime))
