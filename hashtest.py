@@ -30,4 +30,23 @@ period = 2
 chunkedTime = int(currentUnixSeconds / period)
 print('Chunked time:         ' + str(chunkedTime))
 
+innerString = secret + str(chunkedTime)
+innerStringToBytes = bytes(innerString, 'utf-8')
+shaInner = hashlib.sha256()
+shaInner.update(innerStringToBytes)
+
+print('innerString:          ' + innerString)
+
+hashedInnerAsHex = shaInner.hexdigest()
+print('Inner hash:           ' + str(hashedInnerAsHex))
+
+shaOuter = hashlib.sha256()
+outerString = str(hashedInnerAsHex)
+#print('outerString: ' + outerString)
+outerToBytes = bytes(outerString, 'utf-8')
+shaOuter.update(outerToBytes)
+
+outerHexDigest = shaOuter.hexdigest()
+print('Outer hash:           ' + outerHexDigest)
+
 print()
