@@ -7,7 +7,7 @@ from PIL import Image
 import time
 
 secretInput = 'ABCDEFGHIJKLMNOP'
-periodInput = 1
+periodInput = 2
 
 def consolePrintBuffer(string):
     print()
@@ -30,10 +30,10 @@ for i in range(10):
     print('(Debug: image written)')
 
     with Image.open('qrCurrent.png') as img:
-        print('BEFORE Command to open image')
+        print('(Debug: BEFORE Command to open image)')
         img.show()
-        print('AFTER Command to open image')
+        print('(Debug: AFTER Command to open image)')
 
-    time.sleep(1)
+    time.sleep(periodInput)
 
 consolePrintBuffer('END')
