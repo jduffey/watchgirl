@@ -3,7 +3,17 @@ import jwt
 import datetime
 
 
-expirationJWT = datetime.datetime.now()+datetime.timedelta(minutes=10)
-generated_JWT = jwt.encode({'iss': 'Byrne\'s Pub', 'exp': expirationJWT}, 'THE_SECRET', algorithm='HS256')
+currentTime = datetime.datetime.now()
+expirationJWT = currentTime+datetime.timedelta(minutes=10)
+
+iss = 'Meetup Group, Event #006'
+sub = 'This token indicates the recipient attended Meetup Group\'s Event #006'
+iat = currentTime
+exp = expirationJWT
+
+secret = 'ABC'
+alg = 'HS256'
+
+generated_JWT = jwt.encode({'iss': iss, 'sub': sub, 'iat': iat, 'exp': exp}, secret, algorithm=alg)
 
 print(generated_JWT)
