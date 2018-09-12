@@ -6,11 +6,10 @@ print()
 print('*** BEGIN ***')
 print()
 
-# Set and print the time
-currentUnixTime = time.time()
-currentUnixSeconds = int(currentUnixTime)
-print('Unix time:            ' + str(currentUnixTime))
-print('Unix seconds:         ' + str(currentUnixSeconds))
+""" CONSTANTS """
+secretStringCONSTANT = 'ABCDEFGHIJKLMNOP'
+periodIntegerCONSTANT = 1
+""" CONSTANTS END """
 
 def setSecret(secretString):
     secretString = secretString
@@ -26,45 +25,52 @@ def hashTheInput(stringInput):
     hashedInput.update(stringToByets)
     return hashedInput
 
+def getChunkedTime(period):
+    currentUnixTime = time.time()
+    currentUnixSeconds = int(currentUnixTime)
+    chunkedTime = int(currentUnixSeconds / period)
+    return chunkedTime
+
+def setInnerString(secret):
+    innerString = secret + str(chunkedTime)
+    return innerString
+
+""" TO BE FILED UNDER MAIN """
+
 # Set and print the secret
-secret = setSecret('ABCDEFGHIJKLMNOP')
+secret = setSecret(secretStringCONSTANT)
 print('Secret:               ' + secret)
 
-# Hash the secret and print the digest
-hashedInput = hashTheInput(secret)
-hexDigest = hashedInput.hexdigest()
-print('SHA256 secret digest: ' + str(hexDigest))
+# Set the period
+period = setPeriod(periodIntegerCONSTANT)
 
-period = setPeriod(2)
-chunkedTime = int(currentUnixSeconds / period)
+# Assign and print chunked time
+chunkedTime = getChunkedTime(period)
 print('Chunked time:         ' + str(chunkedTime))
 
-innerString = secret + str(chunkedTime)
-innerStringToBytes = bytes(innerString, 'utf-8')
-shaInner = hashlib.sha256()
-shaInner.update(innerStringToBytes)
+# Hash the secret and print the digest (NOT RELEVANT TO FINAL PRODUCT)
+hasedSecret = hashTheInput(secret)
+hexDigestOfSecret = hasedSecret.hexdigest()
+print('SHA256 secret digest: ' + str(hexDigestOfSecret))
 
+# Set inner string
+innerString = setInnerString(secret)
+
+# Operations for inner hash
+shaInner = hashTheInput(innerString)
+
+# Print inner string and digest (NOT RELEVANT TO FINAL PRODUCT)
 print('innerString:          ' + innerString)
-
 hashedInnerAsHex = shaInner.hexdigest()
 print('Inner hash:           ' + str(hashedInnerAsHex))
 
-shaOuter = hashlib.sha256()
-outerString = str(hashedInnerAsHex)
-#print('outerString: ' + outerString)
-outerToBytes = bytes(outerString, 'utf-8')
-shaOuter.update(outerToBytes)
+# Operations for outer hash
+shaOuter = hashTheInput(hashedInnerAsHex)
 
+# Print the outer digest
 outerHexDigest = shaOuter.hexdigest()
 print('Outer hash:           ' + outerHexDigest)
 
 print()
 print('*** END ***')
 print()
-
-
-# digestSize = hashedInput.digest_size
-# print('Digest size:          ' + str(digestSize))
-
-# blockSize = hashedInput.block_size
-# print('Block size:           ' + str(blockSize))
