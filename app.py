@@ -1,11 +1,16 @@
-import hashtest
+import jedhash
 
-print()
-print('*** BEGIN ***')
-print()
+secretInput = 'ABCDEFGHIJKLMNOP'
+periodInput = 1
 
-hashtest.main('ABCDEFGHIJKLMNOP', 1)
+def consolePrintBuffer(string):
+    print()
+    print('*** ' + string + ' ***')
+    print()
 
-print()
-print('*** END ***')
-print()
+
+consolePrintBuffer('BEGIN')
+
+jedhash.main(secretInput, periodInput)
+
+consolePrintBuffer('END')
