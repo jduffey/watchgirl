@@ -2,12 +2,23 @@ import hashlib
 import datetime
 import time
 
-
 print()
+print('*** BEGIN ***')
+print()
+
+# Set and print the time
+currentUnixTime = time.time()
+currentUnixSeconds = int(currentUnixTime)
+print('Unix time:            ' + str(currentUnixTime))
+print('Unix seconds:         ' + str(currentUnixSeconds))
 
 def setSecret(secretString):
     secretString = secretString
     return secretString
+
+def setPeriod(periodInteger):
+    period = periodInteger
+    return period
 
 def hashTheInput(stringInput):
     stringToByets = bytes(stringInput, 'utf-8')
@@ -19,23 +30,12 @@ def hashTheInput(stringInput):
 secret = setSecret('ABCDEFGHIJKLMNOP')
 print('Secret:               ' + secret)
 
+# Hash the secret and print the digest
 hashedInput = hashTheInput(secret)
+hexDigest = hashedInput.hexdigest()
+print('SHA256 secret digest: ' + str(hexDigest))
 
-# hexDigest = hashedInput.hexdigest()
-# print('SHA256 secret digest: ' + str(hexDigest))
-
-# digestSize = hashedInput.digest_size
-# print('Digest size:          ' + str(digestSize))
-
-# blockSize = hashedInput.block_size
-# print('Block size:           ' + str(blockSize))
-
-currentUnixTime = time.time()
-currentUnixSeconds = int(currentUnixTime)
-print('Unix time:            ' + str(currentUnixTime))
-print('Unix seconds:         ' + str(currentUnixSeconds))
-
-period = 2
+period = setPeriod(2)
 chunkedTime = int(currentUnixSeconds / period)
 print('Chunked time:         ' + str(chunkedTime))
 
@@ -59,3 +59,12 @@ outerHexDigest = shaOuter.hexdigest()
 print('Outer hash:           ' + outerHexDigest)
 
 print()
+print('*** END ***')
+print()
+
+
+# digestSize = hashedInput.digest_size
+# print('Digest size:          ' + str(digestSize))
+
+# blockSize = hashedInput.block_size
+# print('Block size:           ' + str(blockSize))
