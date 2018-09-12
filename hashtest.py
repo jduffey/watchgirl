@@ -65,7 +65,7 @@ hashedInnerAsHex = shaInner.hexdigest()
 print('Inner hash:           ' + str(hashedInnerAsHex))
 
 # Operations for outer hash
-shaOuter = hashTheInput(hashedInnerAsHex)
+shaOuter = hashTheInput(secret + hashedInnerAsHex)
 
 # Print the outer digest
 outerHexDigest = shaOuter.hexdigest()
