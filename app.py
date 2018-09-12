@@ -11,6 +11,12 @@ def consolePrintBuffer(string):
 
 consolePrintBuffer('BEGIN')
 
-jedhash.main(secretInput, periodInput)
+print('Secret:         ' + secretInput)
+print('Period (sec):   ' + str(periodInput))
+
+jedhash.returnTheHash(secretInput, periodInput)
+
+outerHash = jedhash.returnTheHash(secretInput, periodInput)
+print('Final hash:     ' + outerHash)
 
 consolePrintBuffer('END')

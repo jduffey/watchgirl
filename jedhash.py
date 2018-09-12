@@ -27,29 +27,31 @@ def setInnerString(secret, chunkedTime):
     innerString = secret + str(chunkedTime)
     return innerString
 
-def main(secretInput, periodInput):
+def returnTheHash(secretInput, periodInput):
 
     secret = setSecret(secretInput)
-    print('Secret:               ' + secret)
+    #print('Secret:               ' + secret)
 
     period = setPeriod(periodInput)
 
     chunkedTime = getChunkedTime(period)
-    print('Chunked time:         ' + str(chunkedTime))
+    #print('Chunked time:         ' + str(chunkedTime))
 
     hasedSecret = hashTheInput(secret)
     hexDigestOfSecret = hasedSecret.hexdigest()
-    print('SHA256 secret digest: ' + str(hexDigestOfSecret))
+    #print('SHA256 secret digest: ' + str(hexDigestOfSecret))
 
     innerString = setInnerString(secret, chunkedTime)
 
     shaInner = hashTheInput(innerString)
 
-    print('innerString:          ' + innerString)
+    #print('innerString:          ' + innerString)
     hashedInnerAsHex = shaInner.hexdigest()
-    print('Inner hash:           ' + str(hashedInnerAsHex))
+    #print('Inner hash:           ' + str(hashedInnerAsHex))
 
     shaOuter = hashTheInput(secret + hashedInnerAsHex)
 
     outerHexDigest = shaOuter.hexdigest()
-    print('Outer hash:           ' + outerHexDigest)
+    #print('Outer hash:           ' + outerHexDigest)
+
+    return outerHexDigest
