@@ -5,21 +5,30 @@ import time
 
 print()
 
-secret = 'ABCDEFGHIJKLMNOP'
+def setSecret(secretString):
+    secretString = secretString
+    return secretString
+
+def hashTheInput(stringInput):
+    stringToByets = bytes(stringInput, 'utf-8')
+    hashedInput = hashlib.sha256()
+    hashedInput.update(stringToByets)
+    return hashedInput
+
+# Set and print the secret
+secret = setSecret('ABCDEFGHIJKLMNOP')
 print('Secret:               ' + secret)
 
-stringToByets = bytes(secret, 'utf-8')
-m = hashlib.sha256()
-m.update(stringToByets)
+hashedInput = hashTheInput(secret)
 
-hexDigest = m.hexdigest()
-print('SHA256 hex digest:    ' + str(hexDigest))
+# hexDigest = hashedInput.hexdigest()
+# print('SHA256 secret digest: ' + str(hexDigest))
 
-digestSize = m.digest_size
-print('Digest size:          ' + str(digestSize))
+# digestSize = hashedInput.digest_size
+# print('Digest size:          ' + str(digestSize))
 
-blockSize = m.block_size
-print('Block size:           ' + str(blockSize))
+# blockSize = hashedInput.block_size
+# print('Block size:           ' + str(blockSize))
 
 currentUnixTime = time.time()
 currentUnixSeconds = int(currentUnixTime)
