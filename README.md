@@ -1,4 +1,4 @@
 # qrcode-project
 :mag: Toying around with QR codes and Python
 
-![alt text](https://github.com/jduffey/qrcode-project/blob/master/img/macosscreencap.jpg)
+![2018-09-12-13-22 EDT](https://github.com/jduffey/qrcode-project/blob/master/img/macosscreencap.jpg)
