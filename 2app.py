@@ -28,14 +28,13 @@ for i in range(codesToGenerate):
     expirationJWT = currentTime+datetime.timedelta(minutes=10)
 
     iss = 'Meetup Group, Event #006'
-    sub = 'This token indicates the recipient attended Meetup Group\'s Event #006'
     iat = currentTime
     exp = expirationJWT
 
     secret = 'ABC'
     alg = 'HS256'
 
-    generated_jwt = jwtgen.genjwt(iss, sub, iat, exp, secret, alg)
+    generated_jwt = jwtgen.genjwt(iss, iat, exp, secret, alg)
     jwtasstring = str(generated_jwt.decode('utf-8'))
 
     print(jwtasstring)

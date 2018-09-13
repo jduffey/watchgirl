@@ -14,6 +14,6 @@ import datetime
 # secret = 'ABC'
 # alg = 'HS256'
 
-def genjwt(iss, sub, iat, exp, secret, alg):
-    generated_JWT = jwt.encode({'iss': iss, 'sub': sub, 'iat': iat, 'exp': exp}, secret, algorithm=alg)
+def genjwt(iss, iat, exp, secret, alg):
+    generated_JWT = jwt.encode({'iss': iss, 'iat': iat, 'exp': exp}, secret, algorithm=alg)
     return generated_JWT
