@@ -51,6 +51,7 @@ for i in range(codesToGenerate):
         img.show()
         print('(Debug: AFTER command to open image)')
 
-    time.sleep(delayBetweenCodesInSeconds)
+    if i < codesToGenerate - 1:
+        time.sleep(delayBetweenCodesInSeconds)
 
 consolePrintBuffer('END')
