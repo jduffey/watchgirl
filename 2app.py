@@ -1,5 +1,6 @@
 import jwtgen
 import datetime
+import time
 
 import pyqrcode
 
@@ -36,7 +37,9 @@ for i in range(codesToGenerate):
 
     print(jwtasstring)
     print('iat:   ' + str(iat))
+    print('unix:  ' + str(time.mktime(iat.timetuple())))
     print('exp:   ' + str(exp))
+    print('unix:  ' + str(time.mktime(exp.timetuple())))
 
     jwtimage = pyqrcode.create(str(jwtasstring))
     jwtimage.png('jwtimage.png', scale = 5)
