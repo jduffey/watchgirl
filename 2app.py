@@ -50,7 +50,9 @@ for i in range(codesToGenerate):
         img.show()
         print('(Debug: AFTER command to open image)')
 
-    if i < codesToGenerate - 1:
+    notOnTheLastIteration = i < codesToGenerate - 1
+
+    if notOnTheLastIteration:
         time.sleep(delayBetweenCodesInSeconds)
 
 consolePrintBuffer('END')
