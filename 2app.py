@@ -24,6 +24,10 @@ def consolePrintBuffer(string):
 
 consolePrintBuffer('BEGIN')
 
+print('  Delay (seconds): ' + str(delayBetweenCodesInSeconds))
+print('Codes to generate: ' + str(codesToGenerate))
+print()
+
 for i in range(codesToGenerate):
 
     currentTime = datetime.datetime.now()
@@ -35,11 +39,14 @@ for i in range(codesToGenerate):
     generated_jwt = jwtgen.genjwt(iss, iat, exp, secret, alg)
     jwtasstring = str(generated_jwt.decode('utf-8'))
 
-    print(jwtasstring)
-    print('iat:   ' + str(iat))
-    print('unix:  ' + str(time.mktime(iat.timetuple())))
-    print('exp:   ' + str(exp))
-    print('unix:  ' + str(time.mktime(exp.timetuple())))
+    jwtsplit = jwtasstring.split('.')
+    print('   JWT header:  ' + jwtsplit[0])
+    print('  JWT payload:  ' + jwtsplit[1])
+    print('JWT signature:  ' + jwtsplit[2])
+    print('          iat:  ' + str(iat))
+    print('     unix-iat:  ' + str(time.mktime(iat.timetuple())))
+    print('          exp:  ' + str(exp))
+    print('     unix-exp:  ' + str(time.mktime(exp.timetuple())))
 
     jwtimage = pyqrcode.create(str(jwtasstring))
     jwtimage.png('jwtimage.png', scale = 5)
@@ -49,6 +56,8 @@ for i in range(codesToGenerate):
         print('(Debug: BEFORE command to open image)')
         img.show()
         print('(Debug: AFTER command to open image)')
+
+    print()
 
     notOnTheLastIteration = i < codesToGenerate - 1
 
