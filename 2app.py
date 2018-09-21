@@ -22,6 +22,18 @@ def consolePrintBuffer(string):
     print('*** ' + string + ' ***')
     print()
 
+def consolePrintJWTstats():
+    jwtsplit = jwtasstring.split('.')
+    print('JWT head:  ' + jwtsplit[0])
+    print('JWT payl:  ' + jwtsplit[1])
+    print('JWT sign:  ' + jwtsplit[2])
+    print('     iat:  ' + str(iat))
+    print('unix-iat:  ' + str(time.mktime(iat.timetuple())))
+    print('     exp:  ' + str(exp))
+    print('unix-exp:  ' + str(time.mktime(exp.timetuple())))
+    print('     iss:  ' + config.payload['iss'])
+    print('    desc:  ' + config.payload['desc'])
+
 
 consolePrintBuffer('BEGIN')
 
@@ -41,16 +53,18 @@ for i in range(codesToGenerate):
     generated_jwt = jwtgen.genjwt(config.payload['iss'], config.payload['desc'], iat, exp, secret, alg)
     jwtasstring = str(generated_jwt.decode('utf-8'))
 
-    jwtsplit = jwtasstring.split('.')
-    print('JWT head:  ' + jwtsplit[0])
-    print('JWT payl:  ' + jwtsplit[1])
-    print('JWT sign:  ' + jwtsplit[2])
-    print('     iat:  ' + str(iat))
-    print('unix-iat:  ' + str(time.mktime(iat.timetuple())))
-    print('     exp:  ' + str(exp))
-    print('unix-exp:  ' + str(time.mktime(exp.timetuple())))
-    print('     iss:  ' + config.payload['iss'])
-    print('    desc:  ' + config.payload['desc'])
+    consolePrintJWTstats()
+
+    # jwtsplit = jwtasstring.split('.')
+    # print('JWT head:  ' + jwtsplit[0])
+    # print('JWT payl:  ' + jwtsplit[1])
+    # print('JWT sign:  ' + jwtsplit[2])
+    # print('     iat:  ' + str(iat))
+    # print('unix-iat:  ' + str(time.mktime(iat.timetuple())))
+    # print('     exp:  ' + str(exp))
+    # print('unix-exp:  ' + str(time.mktime(exp.timetuple())))
+    # print('     iss:  ' + config.payload['iss'])
+    # print('    desc:  ' + config.payload['desc'])
 
     jwtimage = pyqrcode.create(str(jwtasstring))
     jwtimage.png('jwtimage.png', scale = qrCodeSize)
