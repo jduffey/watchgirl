@@ -55,17 +55,6 @@ for i in range(codesToGenerate):
 
     consolePrintJWTstats()
 
-    # jwtsplit = jwtasstring.split('.')
-    # print('JWT head:  ' + jwtsplit[0])
-    # print('JWT payl:  ' + jwtsplit[1])
-    # print('JWT sign:  ' + jwtsplit[2])
-    # print('     iat:  ' + str(iat))
-    # print('unix-iat:  ' + str(time.mktime(iat.timetuple())))
-    # print('     exp:  ' + str(exp))
-    # print('unix-exp:  ' + str(time.mktime(exp.timetuple())))
-    # print('     iss:  ' + config.payload['iss'])
-    # print('    desc:  ' + config.payload['desc'])
-
     jwtimage = pyqrcode.create(str(jwtasstring))
     jwtimage.png('jwtimage.png', scale = qrCodeSize)
     print('(Debug: image written)')
