@@ -9,12 +9,12 @@ from PIL import Image
 
 import time
 
-delayBetweenCodesInSeconds = 2
-codesToGenerate = 5
+delayBetweenCodesInSeconds = config.settings['delayBetweenCodesInSeconds']
+codesToGenerate = config.settings['codesToGenerate']
+qrCodeSize = config.settings['qrCodeSize']
 
-#iss = 'Meetup Group, Event #006'
-secret = 'ABC'
-alg = 'HS256'
+secret = config.signature['secret']
+alg = config.header['alg']
 
 
 def consolePrintBuffer(string):
@@ -27,6 +27,7 @@ consolePrintBuffer('BEGIN')
 
 print('  Delay (seconds): ' + str(delayBetweenCodesInSeconds))
 print('Codes to generate: ' + str(codesToGenerate))
+print('     QR code size: ' + str(qrCodeSize))
 print()
 
 for i in range(codesToGenerate):
@@ -52,7 +53,7 @@ for i in range(codesToGenerate):
     print('    desc:  ' + config.payload['desc'])
 
     jwtimage = pyqrcode.create(str(jwtasstring))
-    jwtimage.png('jwtimage.png', scale = 5)
+    jwtimage.png('jwtimage.png', scale = qrCodeSize)
     print('(Debug: image written)')
 
     with Image.open('jwtimage.png') as img:
