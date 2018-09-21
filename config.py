@@ -7,4 +7,5 @@ header = dict(
 
 payload = dict(
     iss = 'This is the issuer\'s identifier.',
+    desc = 'This is the description field of the paylod.'
     )

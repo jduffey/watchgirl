@@ -37,7 +37,7 @@ for i in range(codesToGenerate):
     iat = currentTime
     exp = expirationJWT
 
-    generated_jwt = jwtgen.genjwt(config.payload['iss'], iat, exp, secret, alg)
+    generated_jwt = jwtgen.genjwt(config.payload['iss'], config.payload['desc'], iat, exp, secret, alg)
     jwtasstring = str(generated_jwt.decode('utf-8'))
 
     jwtsplit = jwtasstring.split('.')
@@ -49,6 +49,7 @@ for i in range(codesToGenerate):
     print('          exp:  ' + str(exp))
     print('     unix-exp:  ' + str(time.mktime(exp.timetuple())))
     print('          iss:  ' + config.payload['iss'])
+    print('         desc:  ' + config.payload['desc'])
 
     jwtimage = pyqrcode.create(str(jwtasstring))
     jwtimage.png('jwtimage.png', scale = 5)
