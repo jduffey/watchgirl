@@ -1,6 +1,7 @@
 import jwtgen
 import datetime
 import time
+import config
 
 import pyqrcode
 
@@ -11,7 +12,7 @@ import time
 delayBetweenCodesInSeconds = 2
 codesToGenerate = 5
 
-iss = 'Meetup Group, Event #006'
+#iss = 'Meetup Group, Event #006'
 secret = 'ABC'
 alg = 'HS256'
 
@@ -36,7 +37,7 @@ for i in range(codesToGenerate):
     iat = currentTime
     exp = expirationJWT
 
-    generated_jwt = jwtgen.genjwt(iss, iat, exp, secret, alg)
+    generated_jwt = jwtgen.genjwt(config.payload['iss'], iat, exp, secret, alg)
     jwtasstring = str(generated_jwt.decode('utf-8'))
 
     jwtsplit = jwtasstring.split('.')
@@ -47,6 +48,7 @@ for i in range(codesToGenerate):
     print('     unix-iat:  ' + str(time.mktime(iat.timetuple())))
     print('          exp:  ' + str(exp))
     print('     unix-exp:  ' + str(time.mktime(exp.timetuple())))
+    print('          iss:  ' + config.payload['iss'])
 
     jwtimage = pyqrcode.create(str(jwtasstring))
     jwtimage.png('jwtimage.png', scale = 5)
