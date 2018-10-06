@@ -24,8 +24,10 @@ for i in range(10):
 
     outerHash = jedhash.returnTheHash(secretInput, periodInput)
     print('Final hash:     ' + outerHash)
+    rightMostOfHash = outerHash[-4:]
+    print('Rightmost:      ' + rightMostOfHash)
 
-    qrCurrent = pyqrcode.create(str(outerHash))
+    qrCurrent = pyqrcode.create(str(rightMostOfHash))
     qrCurrent.png('qrCurrent.png', scale = 20)
     print('(Debug: image written)')
 
