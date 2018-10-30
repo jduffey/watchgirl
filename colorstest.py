@@ -31,8 +31,11 @@ def whatcolor(i):
     	print(Back.WHITE)
     	print('7')
 
+#print(Style.BRIGHT)
+
 for i in range(10):
 	for i in range(8):
+		print(Style.BRIGHT)
 		whatcolor(random.randint(0,7))
 	print(Style.RESET_ALL)
 	print('***')
