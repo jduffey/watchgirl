@@ -9,8 +9,8 @@ import time
 import random
 
 pygame.init()
-APP_X_SIZE = 400
-APP_Y_SIZE = 400
+
+APP_SQUARE_SIZE = 600
 
 myRed = (255, 0, 0)
 myBlue = (0, 0, 255)
@@ -20,13 +20,13 @@ myWhite = (255, 255, 255)
 myLightRed = (255, 180, 180)
 myLightBLue = (190, 190, 255)
 
-topLeft = (0, 0, APP_X_SIZE/2, APP_Y_SIZE/2)
-topRight = (APP_X_SIZE/2, 0, APP_X_SIZE, APP_Y_SIZE/2)
-bottomLeft = (0, APP_Y_SIZE/2, APP_X_SIZE/2, APP_Y_SIZE)
-bottomRight = (APP_X_SIZE/2, APP_Y_SIZE/2, APP_X_SIZE, APP_Y_SIZE)
+topLeft = (0, 0, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2)
+topRight = (APP_SQUARE_SIZE/2, 0, APP_SQUARE_SIZE, APP_SQUARE_SIZE/2)
+bottomLeft = (0, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE)
+bottomRight = (APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE, APP_SQUARE_SIZE)
 
-screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
-pygame.display.set_caption('Fun Boring Example comes with Source Code too!!')
+screen = pygame.display.set_mode((APP_SQUARE_SIZE, APP_SQUARE_SIZE))
+pygame.display.set_caption('Identifier #580CD2E889BD - Onett Art Museum Main Entrance')
 pygame.mouse.set_visible(True)
 #pygame.mouse.set_visible(False)
 squareThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
