@@ -22,6 +22,7 @@ myYellow = (255, 255, 0)
 myWhite = (255, 255, 255)
 myLightRed = (255, 180, 180)
 myLightBLue = (190, 190, 255)
+myBlack = (0, 0, 0)
 
 squareOne = (0, 0, 1 * APP_X_SIZE/4, APP_Y_SIZE)
 squareTwo = (1 * APP_X_SIZE/4, 0, 2 * APP_X_SIZE/4, APP_Y_SIZE)
@@ -54,9 +55,22 @@ def getRandomColor():
 while isDrawingActive:
 
     pygame.draw.rect(screen, getRandomColor(), squareOne)
+    pygame.draw.rect(screen, myBlack, (0, 0, 5, APP_Y_SIZE))
+
     pygame.draw.rect(screen, getRandomColor(), squareTwo)
+    pygame.draw.rect(screen, myBlack, (150, 0, 5, APP_Y_SIZE))
+
     pygame.draw.rect(screen, getRandomColor(), squareThree)
+    pygame.draw.rect(screen, myBlack, (300, 0, 5, APP_Y_SIZE))
+
     pygame.draw.rect(screen, getRandomColor(), squareFour)
+    pygame.draw.rect(screen, myBlack, (450, 0, 5, APP_Y_SIZE))
+
+    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE, 5))
+    pygame.draw.rect(screen, myBlack, (0, 145, APP_X_SIZE, 5))
+
+    pygame.draw.rect(screen, myBlack, (APP_X_SIZE - 5, 0, 5, APP_Y_SIZE))
+
     pygame.display.flip()
     time.sleep(1)
     #print(time.time())
