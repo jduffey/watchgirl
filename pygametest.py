@@ -12,6 +12,8 @@ pygame.init()
 
 windowTitle = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
+BORDER_THICKNESS = 5
+
 APP_X_SIZE = 600
 APP_Y_SIZE = 150
 
@@ -29,9 +31,7 @@ squareTwo = (1 * APP_X_SIZE/4, 0, 2 * APP_X_SIZE/4, APP_Y_SIZE)
 squareThree = (2 * APP_X_SIZE/4, 0, 3 * APP_X_SIZE/4, APP_Y_SIZE)
 squareFour = (3 * APP_X_SIZE/4, 0, 4 * APP_X_SIZE/4, APP_Y_SIZE)
 
-BORDER_THICKNESS = 5
-
-screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
+screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(windowTitle)
 pygame.mouse.set_visible(True)
 squareThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
@@ -57,13 +57,14 @@ def drawColorSquare(whichSquare):
     pygame.draw.rect(screen, getRandomColor(), whichSquare)
 
 def drawSquareBorders():
+    pygame.draw.rect(screen, myBlack, (0, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (150, 0, BORDER_THICKNESS, APP_Y_SIZE))
     pygame.draw.rect(screen, myBlack, (300, 0, BORDER_THICKNESS, APP_Y_SIZE))
     pygame.draw.rect(screen, myBlack, (450, 0, BORDER_THICKNESS, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (150, 0, BORDER_THICKNESS, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (0, 0, BORDER_THICKNESS, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE, BORDER_THICKNESS))
-    pygame.draw.rect(screen, myBlack, (0, APP_Y_SIZE - BORDER_THICKNESS, APP_X_SIZE, BORDER_THICKNESS))
-    pygame.draw.rect(screen, myBlack, (APP_X_SIZE - BORDER_THICKNESS, 0, BORDER_THICKNESS, APP_Y_SIZE))
+
+    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
+    pygame.draw.rect(screen, myBlack, (0, APP_Y_SIZE - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
+    pygame.draw.rect(screen, myBlack, (APP_X_SIZE, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 
 while isDrawingActive:
@@ -77,7 +78,8 @@ while isDrawingActive:
 
     pygame.display.flip()
     time.sleep(1)
-    #print(time.time())
+
+    print(time.time())
     # squareThatIsTheSizeOfTheScreen.fill((255, 255, 255))
     # screen.blit(squareThatIsTheSizeOfTheScreen, (0, 0))
     # pygame.display.flip()
