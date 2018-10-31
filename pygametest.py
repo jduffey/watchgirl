@@ -51,13 +51,21 @@ def getRandomColor():
         nextColor = myYellow
     return nextColor
 
+def drawColorSquare(whichSquare):
+    pygame.draw.rect(screen, getRandomColor(), whichSquare)
+
 
 while isDrawingActive:
 
-    pygame.draw.rect(screen, getRandomColor(), squareOne)
-    pygame.draw.rect(screen, getRandomColor(), squareTwo)
-    pygame.draw.rect(screen, getRandomColor(), squareThree)
-    pygame.draw.rect(screen, getRandomColor(), squareFour)
+    drawColorSquare(squareOne)
+    drawColorSquare(squareTwo)
+    drawColorSquare(squareThree)
+    drawColorSquare(squareFour)
+
+    # pygame.draw.rect(screen, getRandomColor(), squareOne)
+    # pygame.draw.rect(screen, getRandomColor(), squareTwo)
+    # pygame.draw.rect(screen, getRandomColor(), squareThree)
+    # pygame.draw.rect(screen, getRandomColor(), squareFour)
 
     pygame.draw.rect(screen, myBlack, (300, 0, 5, APP_Y_SIZE))
     pygame.draw.rect(screen, myBlack, (450, 0, 5, APP_Y_SIZE))
