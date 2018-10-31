@@ -54,6 +54,15 @@ def getRandomColor():
 def drawColorSquare(whichSquare):
     pygame.draw.rect(screen, getRandomColor(), whichSquare)
 
+def drawSquareBorders():
+    pygame.draw.rect(screen, myBlack, (300, 0, 5, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (450, 0, 5, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (150, 0, 5, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (0, 0, 5, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE, 5))
+    pygame.draw.rect(screen, myBlack, (0, 145, APP_X_SIZE, 5))
+    pygame.draw.rect(screen, myBlack, (APP_X_SIZE - 5, 0, 5, APP_Y_SIZE))
+
 
 while isDrawingActive:
 
@@ -62,18 +71,7 @@ while isDrawingActive:
     drawColorSquare(squareThree)
     drawColorSquare(squareFour)
 
-    # pygame.draw.rect(screen, getRandomColor(), squareOne)
-    # pygame.draw.rect(screen, getRandomColor(), squareTwo)
-    # pygame.draw.rect(screen, getRandomColor(), squareThree)
-    # pygame.draw.rect(screen, getRandomColor(), squareFour)
-
-    pygame.draw.rect(screen, myBlack, (300, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (450, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (150, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (0, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE, 5))
-    pygame.draw.rect(screen, myBlack, (0, 145, APP_X_SIZE, 5))
-    pygame.draw.rect(screen, myBlack, (APP_X_SIZE - 5, 0, 5, APP_Y_SIZE))
+    drawSquareBorders()
 
     pygame.display.flip()
     time.sleep(1)
