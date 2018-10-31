@@ -20,10 +20,10 @@ myWhite = (255, 255, 255)
 myLightRed = (255, 180, 180)
 myLightBLue = (190, 190, 255)
 
-topLeft = (0, 0, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2)
-topRight = (APP_SQUARE_SIZE/2, 0, APP_SQUARE_SIZE, APP_SQUARE_SIZE/2)
-bottomLeft = (0, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE)
-bottomRight = (APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE, APP_SQUARE_SIZE)
+squareOne = (0, 0, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2)
+squareTwo = (APP_SQUARE_SIZE/2, 0, APP_SQUARE_SIZE, APP_SQUARE_SIZE/2)
+squareThree = (0, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE)
+squareFour = (APP_SQUARE_SIZE/2, APP_SQUARE_SIZE/2, APP_SQUARE_SIZE, APP_SQUARE_SIZE)
 
 screen = pygame.display.set_mode((APP_SQUARE_SIZE, APP_SQUARE_SIZE))
 pygame.display.set_caption('Identifier #580CD2E889BD - Onett Art Museum Main Entrance')
@@ -51,10 +51,10 @@ def getRandomColor():
 
 while isDrawingActive:
 
-    pygame.draw.rect(screen, getRandomColor(), topLeft)
-    pygame.draw.rect(screen, getRandomColor(), topRight)
-    pygame.draw.rect(screen, getRandomColor(), bottomLeft)
-    pygame.draw.rect(screen, getRandomColor(), bottomRight)
+    pygame.draw.rect(screen, getRandomColor(), squareOne)
+    pygame.draw.rect(screen, getRandomColor(), squareTwo)
+    pygame.draw.rect(screen, getRandomColor(), squareThree)
+    pygame.draw.rect(screen, getRandomColor(), squareFour)
     pygame.display.flip()
     time.sleep(2)
     #print(time.time())
