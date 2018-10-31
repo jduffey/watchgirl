@@ -29,6 +29,8 @@ squareTwo = (1 * APP_X_SIZE/4, 0, 2 * APP_X_SIZE/4, APP_Y_SIZE)
 squareThree = (2 * APP_X_SIZE/4, 0, 3 * APP_X_SIZE/4, APP_Y_SIZE)
 squareFour = (3 * APP_X_SIZE/4, 0, 4 * APP_X_SIZE/4, APP_Y_SIZE)
 
+BORDER_THICKNESS = 5
+
 screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
 pygame.display.set_caption(windowTitle)
 pygame.mouse.set_visible(True)
@@ -55,13 +57,13 @@ def drawColorSquare(whichSquare):
     pygame.draw.rect(screen, getRandomColor(), whichSquare)
 
 def drawSquareBorders():
-    pygame.draw.rect(screen, myBlack, (300, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (450, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (150, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (0, 0, 5, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE, 5))
-    pygame.draw.rect(screen, myBlack, (0, 145, APP_X_SIZE, 5))
-    pygame.draw.rect(screen, myBlack, (APP_X_SIZE - 5, 0, 5, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (300, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (450, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (150, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (0, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE, BORDER_THICKNESS))
+    pygame.draw.rect(screen, myBlack, (0, APP_Y_SIZE - BORDER_THICKNESS, APP_X_SIZE, BORDER_THICKNESS))
+    pygame.draw.rect(screen, myBlack, (APP_X_SIZE - BORDER_THICKNESS, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 
 while isDrawingActive:
