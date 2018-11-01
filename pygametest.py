@@ -1,6 +1,3 @@
-# This is an example that uses pygame.draw.rect:
-# From: https://www.pygame.org/docs/ref/draw.html#pygame.draw.rect
-
 import os, sys
 import random
 import pygame
@@ -8,7 +5,6 @@ from pygame.locals import *
 import time
 import random
 
-pygame.init()
 
 windowTitle = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
@@ -34,15 +30,6 @@ squareTwo = (1 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 2 * APP_X_SIZE/NUMBER_OF_SQUAR
 squareThree = (2 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 3 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
 squareFour = (3 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 4 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
 
-screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
-pygame.display.set_caption(windowTitle)
-pygame.mouse.set_visible(True)
-squareThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
-squareThatIsTheSizeOfTheScreen.fill((255, 255, 255))
-screen.blit(squareThatIsTheSizeOfTheScreen, (0, 0))
-pygame.display.flip()
-
-isDrawingActive = True
 
 def getRandomColor():
     randnum = random.randint(0,3)
@@ -70,6 +57,20 @@ def drawSquareBorders():
     pygame.draw.rect(screen, myBlack, (APP_X_SIZE, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 
+screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
+print('Display function called')
+pygame.display.set_caption(windowTitle)
+pygame.mouse.set_visible(True)
+squareThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
+squareThatIsTheSizeOfTheScreen.fill((255, 255, 255))
+screen.blit(squareThatIsTheSizeOfTheScreen, (0, 0))
+print('Header flip')
+pygame.display.flip()
+print('After header flip')
+
+pygame.init()
+isDrawingActive = True
+
 while isDrawingActive:
 
     drawColorSquare(squareOne)
@@ -79,22 +80,13 @@ while isDrawingActive:
 
     drawSquareBorders()
 
-    pygame.display.flip()
-    time.sleep(PERIOD)
-
     print(time.time())
-    # squareThatIsTheSizeOfTheScreen.fill((255, 255, 255))
-    # screen.blit(squareThatIsTheSizeOfTheScreen, (0, 0))
-    # pygame.display.flip()
-    # time.sleep(.5)
-    
-    
-        # If you delete the below line you should no longer see the vibrant colors.
-       #pygame.display.flip()
-    
-        # if the 'X' button is pressed the window should close:
+
+    pygame.display.flip()
+
+    # if the 'X' button is pressed the window should close:
     Geesh = pygame.event.get()
-    
     if len(Geesh) > 0:
         if Geesh[0].type == QUIT: isDrawingActive = False
-    ## Once this line is reached the window should close
+
+    time.sleep(PERIOD)
