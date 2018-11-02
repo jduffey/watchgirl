@@ -9,7 +9,7 @@ windowTitle = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 BORDER_THICKNESS = 5
 NUMBER_OF_SQUARES = 4
 SQUARE_WIDTH = 150
-PERIOD = 1
+PERIOD_IN_SECONDS = 1
 
 APP_X_SIZE = NUMBER_OF_SQUARES * SQUARE_WIDTH
 APP_Y_SIZE = SQUARE_WIDTH
@@ -87,4 +87,4 @@ while isDrawingActive:
     if len(Geesh) > 0:
         if Geesh[0].type == QUIT: isDrawingActive = False
 
-    time.sleep(PERIOD)
+    time.sleep(PERIOD_IN_SECONDS)
