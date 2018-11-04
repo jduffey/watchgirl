@@ -10,10 +10,10 @@ BORDER_THICKNESS = 5
 SQUARE_WIDTH = 150
 PERIOD_IN_SECONDS = 1
 
-NUMBER_OF_SQUARES = 8
+NUMBER_OF_COLUMNS = 8
 NUMBER_OF_ROWS = 5
 
-APP_X_SIZE = NUMBER_OF_SQUARES * SQUARE_WIDTH
+APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
 
 myRed = (255, 0, 0)
@@ -44,11 +44,11 @@ def drawHorizontalBorders():
         pygame.draw.rect(screen, myBlack, (0, i * SQUARE_WIDTH - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
 
 def drawVerticalBorders():
-    for i in range(0, NUMBER_OF_SQUARES + 1):
-        pygame.draw.rect(screen, myBlack, (i * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    for i in range(0, NUMBER_OF_COLUMNS + 1):
+        pygame.draw.rect(screen, myBlack, (i * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 def drawColorSquare(whichSquare):
-    pygame.draw.rect(screen, getRandomColor(), (whichSquare * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 2 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE))
+    pygame.draw.rect(screen, getRandomColor(), (whichSquare * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, 2 * APP_X_SIZE/NUMBER_OF_COLUMNS, APP_Y_SIZE))
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(windowTitle)
@@ -63,7 +63,7 @@ isDrawingActive = True
 
 while isDrawingActive:
 
-    for whichSquare in range(0, NUMBER_OF_SQUARES):
+    for whichSquare in range(0, NUMBER_OF_COLUMNS):
         drawColorSquare(whichSquare)
 
     drawHorizontalBorders()
