@@ -47,8 +47,8 @@ def drawInteriorBorders():
     for i in range(1, NUMBER_OF_SQUARES):
         pygame.draw.rect(screen, myBlack, (i * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
-def drawColorSquare(i):
-    pygame.draw.rect(screen, getRandomColor(), (i * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 2 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE))
+def drawColorSquare(whichSquare):
+    pygame.draw.rect(screen, getRandomColor(), (whichSquare * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 2 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE))
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(windowTitle)
@@ -63,8 +63,8 @@ isDrawingActive = True
 
 while isDrawingActive:
 
-    for i in range(0, NUMBER_OF_SQUARES):
-        drawColorSquare(i)
+    for whichSquare in range(0, NUMBER_OF_SQUARES):
+        drawColorSquare(whichSquare)
 
     drawExteriorBorder()
     drawInteriorBorders()
