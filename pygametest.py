@@ -10,10 +10,10 @@ PERIOD_IN_SECONDS = 1
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
-SQUARE_WIDTH = 30
+SQUARE_WIDTH = 100
 
-NUMBER_OF_COLUMNS = 20
-NUMBER_OF_ROWS = 20
+NUMBER_OF_COLUMNS = 8
+NUMBER_OF_ROWS = 5
 
 APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
@@ -81,12 +81,13 @@ while isDrawingActive:
 
     for whichRow in range(0, NUMBER_OF_ROWS):
         currentDigest = generateDigestForCurrentTime(whichRow)
-        print(currentDigest)    
         for whichSquareInCurrentRow in range(0, NUMBER_OF_COLUMNS):
             drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest)
 
     drawHorizontalBorders()
     drawVerticalBorders()
+
+    print(time.time())
 
     pygame.display.flip()
 
