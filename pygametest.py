@@ -7,11 +7,11 @@ import random
 windowTitle = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
-SQUARE_WIDTH = 150
+SQUARE_WIDTH = 100
 PERIOD_IN_SECONDS = 1
 
 NUMBER_OF_COLUMNS = 8
-NUMBER_OF_ROWS = 5
+NUMBER_OF_ROWS = 8
 
 APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
@@ -47,8 +47,8 @@ def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
         pygame.draw.rect(screen, myBlack, (i * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
-def drawColorSquare(whichSquare):
-    pygame.draw.rect(screen, getRandomColor(), (whichSquare * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, 2 * APP_X_SIZE/NUMBER_OF_COLUMNS, APP_Y_SIZE))
+def drawColorSquare(whichSquareInCurrentRow, whichRow):
+    pygame.draw.rect(screen, getRandomColor(), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(windowTitle)
@@ -63,8 +63,9 @@ isDrawingActive = True
 
 while isDrawingActive:
 
-    for whichSquare in range(0, NUMBER_OF_COLUMNS):
-        drawColorSquare(whichSquare)
+    for whichRow in range(0, NUMBER_OF_ROWS):    
+        for whichSquareInCurrentRow in range(0, NUMBER_OF_COLUMNS):
+            drawColorSquare(whichSquareInCurrentRow, whichRow)
 
     drawHorizontalBorders()
     drawVerticalBorders()
