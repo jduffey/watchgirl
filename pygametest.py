@@ -7,9 +7,10 @@ import random
 windowTitle = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
-NUMBER_OF_SQUARES = 5
 SQUARE_WIDTH = 150
 PERIOD_IN_SECONDS = 1
+
+NUMBER_OF_SQUARES = 5
 
 APP_X_SIZE = NUMBER_OF_SQUARES * SQUARE_WIDTH
 APP_Y_SIZE = SQUARE_WIDTH
@@ -22,12 +23,6 @@ myWhite = (255, 255, 255)
 myLightRed = (255, 180, 180)
 myLightBLue = (190, 190, 255)
 myBlack = (0, 0, 0)
-
-squareOne = (0, 0, 1 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
-squareTwo = (1 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 2 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
-squareThree = (2 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 3 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
-squareFour = (3 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 4 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
-squareFive = (4 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 5 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
 
 
 def getRandomColor():
@@ -49,13 +44,11 @@ def drawExteriorBorder():
     pygame.draw.rect(screen, myBlack, (APP_X_SIZE, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 def drawInteriorBorders():
-    pygame.draw.rect(screen, myBlack, (1 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (2 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (3 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
-    pygame.draw.rect(screen, myBlack, (4 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    for i in range(1, NUMBER_OF_SQUARES):
+        pygame.draw.rect(screen, myBlack, (i * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
-def drawColorSquare(whichSquare):
-    pygame.draw.rect(screen, getRandomColor(), whichSquare)
+def drawColorSquare(i):
+    pygame.draw.rect(screen, getRandomColor(), (i * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 2 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE))
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(windowTitle)
@@ -70,11 +63,8 @@ isDrawingActive = True
 
 while isDrawingActive:
 
-    drawColorSquare(squareOne)
-    drawColorSquare(squareTwo)
-    drawColorSquare(squareThree)
-    drawColorSquare(squareFour)
-    drawColorSquare(squareFive)
+    for i in range(0, NUMBER_OF_SQUARES):
+        drawColorSquare(i)
 
     drawExteriorBorder()
     drawInteriorBorders()
