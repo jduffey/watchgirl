@@ -10,10 +10,11 @@ BORDER_THICKNESS = 5
 SQUARE_WIDTH = 150
 PERIOD_IN_SECONDS = 1
 
-NUMBER_OF_SQUARES = 5
+NUMBER_OF_SQUARES = 8
+NUMBER_OF_ROWS = 5
 
 APP_X_SIZE = NUMBER_OF_SQUARES * SQUARE_WIDTH
-APP_Y_SIZE = SQUARE_WIDTH
+APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
 
 myRed = (255, 0, 0)
 myBlue = (0, 0, 255)
@@ -39,7 +40,8 @@ def getRandomColor():
 
 def drawHorizontalBorders():
     pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
-    pygame.draw.rect(screen, myBlack, (0, APP_Y_SIZE - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
+    for i in range(1, NUMBER_OF_ROWS + 1):
+        pygame.draw.rect(screen, myBlack, (0, i * SQUARE_WIDTH - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
 
 def drawVerticalBorders():
     for i in range(0, NUMBER_OF_SQUARES + 1):
