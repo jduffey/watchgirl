@@ -5,15 +5,15 @@ import random
 import jedhash
 
 SECRET = "PRIVATE_KEY_GOES_HERE"
-PERIOD_IN_SECONDS = 1
+PERIOD_IN_SECONDS = 3
 
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
 SQUARE_WIDTH = 100
 
-NUMBER_OF_COLUMNS = 8
-NUMBER_OF_ROWS = 5
+NUMBER_OF_COLUMNS = 12
+NUMBER_OF_ROWS = 8
 
 APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
@@ -64,7 +64,7 @@ def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
     pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
 
 def generateDigestForCurrentTime(whichSquareInCurrentRow):
-    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichRow)
+    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichSquareInCurrentRow)
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(WINDOW_TITLE)
@@ -80,7 +80,8 @@ isDrawingActive = True
 while isDrawingActive:
 
     for whichRow in range(0, NUMBER_OF_ROWS):
-        currentDigest = generateDigestForCurrentTime(whichRow)
+        offset = whichRow * PERIOD_IN_SECONDS
+        currentDigest = generateDigestForCurrentTime(offset)
         for whichSquareInCurrentRow in range(0, NUMBER_OF_COLUMNS):
             drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest)
 
