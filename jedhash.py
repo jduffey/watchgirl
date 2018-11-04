@@ -17,17 +17,17 @@ def hashTheInput(stringInput):
     hashedInput.update(stringToByets)
     return hashedInput
 
-def getChunkedTime(period):
-    currentUnixTime = time.time()
-    currentUnixSeconds = int(currentUnixTime)
-    chunkedTime = int(currentUnixSeconds / period)
+def getChunkedTime(period, offset):
+    timeToUse = time.time() + offset
+    unixSecToUse = int(timeToUse)
+    chunkedTime = int(unixSecToUse / period)
     return chunkedTime
 
 def setInnerString(secret, chunkedTime):
     innerString = secret + str(chunkedTime)
     return innerString
 
-def returnTheHash(secretInput, periodInput):
+def returnTheHash(secretInput, periodInput, offset):
 
     """
     This algorithm is a variation of the one found here:
@@ -44,7 +44,7 @@ def returnTheHash(secretInput, periodInput):
 
     period = setPeriod(periodInput)
 
-    chunkedTime = getChunkedTime(period)
+    chunkedTime = getChunkedTime(period, offset)
 
     hasedSecret = hashTheInput(secret)
 
