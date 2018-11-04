@@ -2,16 +2,18 @@ import pygame
 from pygame.locals import *
 import time
 import random
+import jedhash
 
+SECRET = "PRIVATE_KEY_GOES_HERE"
+PERIOD_IN_SECONDS = 1
 
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
 SQUARE_WIDTH = 100
-PERIOD_IN_SECONDS = 1
 
 NUMBER_OF_COLUMNS = 8
-NUMBER_OF_ROWS = 8
+NUMBER_OF_ROWS = 1
 
 APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
@@ -29,24 +31,25 @@ MY_BLACK = (0, 0, 0)
 MY_WHITE = (255, 255, 255)
 
 
-def getRandomColor():
-    randnum = random.randint(0,7)
-    if randnum == 0:
+def getColor(currentDigest, whichSquareInCurrentRow):
+    digitToAssess = currentDigest[whichSquareInCurrentRow]
+    if digitToAssess == '0' or digitToAssess == '8':
         nextColor = MY_RED
-    if randnum == 1:
+    if digitToAssess == '1' or digitToAssess == '9':
         nextColor = MY_ORANGE
-    if randnum == 2:
+    if digitToAssess == '2' or digitToAssess == 'a':
         nextColor = MY_YELLOW
-    if randnum == 3:
+    if digitToAssess == '3' or digitToAssess == 'b':
         nextColor = MY_GREEN
-    if randnum == 4:
+    if digitToAssess == '4' or digitToAssess == 'c':
         nextColor = MY_BLUE
-    if randnum == 5:
+    if digitToAssess == '5' or digitToAssess == 'd':
         nextColor = MY_VIOLET
-    if randnum == 6:
+    if digitToAssess == '6' or digitToAssess == 'e':
         nextColor = MY_BROWN
-    if randnum == 7:
+    if digitToAssess == '7' or digitToAssess == 'f':
         nextColor = MY_GREY
+    print(digitToAssess)
     return nextColor
 
 def drawHorizontalBorders():
@@ -58,8 +61,11 @@ def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
         pygame.draw.rect(screen, MY_BLACK, (i * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
-def drawColorSquare(whichSquareInCurrentRow, whichRow):
-    pygame.draw.rect(screen, getRandomColor(), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
+def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
+    pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
+
+def generateDigestForCurrentTime():
+    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS)
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(WINDOW_TITLE)
@@ -74,14 +80,18 @@ isDrawingActive = True
 
 while isDrawingActive:
 
+    currentDigest = generateDigestForCurrentTime()
+    print(time.time())
+    print(currentDigest)
+
     for whichRow in range(0, NUMBER_OF_ROWS):    
         for whichSquareInCurrentRow in range(0, NUMBER_OF_COLUMNS):
-            drawColorSquare(whichSquareInCurrentRow, whichRow)
+            drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest)
 
     drawHorizontalBorders()
     drawVerticalBorders()
 
-    print(time.time())
+    #print(time.time())
 
     pygame.display.flip()
 
