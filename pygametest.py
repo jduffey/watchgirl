@@ -37,14 +37,12 @@ def getRandomColor():
         nextColor = myYellow
     return nextColor
 
-def drawExteriorBorder():
-    pygame.draw.rect(screen, myBlack, (0, 0, BORDER_THICKNESS, APP_Y_SIZE))
+def drawHorizontalBorders():
     pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
     pygame.draw.rect(screen, myBlack, (0, APP_Y_SIZE - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
-    pygame.draw.rect(screen, myBlack, (APP_X_SIZE, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
-def drawInteriorBorders():
-    for i in range(1, NUMBER_OF_SQUARES):
+def drawVerticalBorders():
+    for i in range(0, NUMBER_OF_SQUARES + 1):
         pygame.draw.rect(screen, myBlack, (i * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 def drawColorSquare(whichSquare):
@@ -66,8 +64,8 @@ while isDrawingActive:
     for whichSquare in range(0, NUMBER_OF_SQUARES):
         drawColorSquare(whichSquare)
 
-    drawExteriorBorder()
-    drawInteriorBorders()
+    drawHorizontalBorders()
+    drawVerticalBorders()
 
     print(time.time())
 
