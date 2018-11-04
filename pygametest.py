@@ -17,25 +17,36 @@ APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
 
 myRed = (255, 0, 0)
-myBlue = (0, 0, 255)
-myGreen = (0, 255, 0)
+myOrange = (255, 127, 0)
 myYellow = (255, 255, 0)
-myWhite = (255, 255, 255)
-myLightRed = (255, 180, 180)
-myLightBLue = (190, 190, 255)
+myGreen = (0, 255, 0)
+myBlue = (0, 0, 255)
+myViolet = (75, 0, 130)
+myBrown = (102, 51, 0)
+myGrey = (31, 31, 31)
+
 myBlack = (0, 0, 0)
+myWhite = (255, 255, 255)
 
 
 def getRandomColor():
-    randnum = random.randint(0,3)
+    randnum = random.randint(0,7)
     if randnum == 0:
         nextColor = myRed
     if randnum == 1:
-        nextColor = myBlue
+        nextColor = myOrange
     if randnum == 2:
-        nextColor = myGreen
-    if randnum == 3:
         nextColor = myYellow
+    if randnum == 3:
+        nextColor = myGreen
+    if randnum == 4:
+        nextColor = myBlue
+    if randnum == 5:
+        nextColor = myViolet
+    if randnum == 6:
+        nextColor = myBrown
+    if randnum == 7:
+        nextColor = myGrey
     return nextColor
 
 def drawHorizontalBorders():
