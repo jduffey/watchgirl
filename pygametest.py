@@ -4,7 +4,7 @@ import time
 import random
 
 
-windowTitle = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
+WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
 SQUARE_WIDTH = 100
@@ -16,56 +16,56 @@ NUMBER_OF_ROWS = 8
 APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
 
-myRed = (255, 0, 0)
-myOrange = (255, 127, 0)
-myYellow = (255, 255, 0)
-myGreen = (0, 255, 0)
-myBlue = (0, 0, 255)
-myViolet = (75, 0, 130)
-myBrown = (102, 51, 0)
-myGrey = (31, 31, 31)
+MY_RED = (255, 0, 0)
+MY_ORANGE = (255, 127, 0)
+MY_YELLOW = (255, 255, 0)
+MY_GREEN = (0, 255, 0)
+MY_BLUE = (0, 0, 255)
+MY_VIOLET = (75, 0, 130)
+MY_BROWN = (102, 51, 0)
+MY_GREY = (40, 40, 40)
 
-myBlack = (0, 0, 0)
-myWhite = (255, 255, 255)
+MY_BLACK = (0, 0, 0)
+MY_WHITE = (255, 255, 255)
 
 
 def getRandomColor():
     randnum = random.randint(0,7)
     if randnum == 0:
-        nextColor = myRed
+        nextColor = MY_RED
     if randnum == 1:
-        nextColor = myOrange
+        nextColor = MY_ORANGE
     if randnum == 2:
-        nextColor = myYellow
+        nextColor = MY_YELLOW
     if randnum == 3:
-        nextColor = myGreen
+        nextColor = MY_GREEN
     if randnum == 4:
-        nextColor = myBlue
+        nextColor = MY_BLUE
     if randnum == 5:
-        nextColor = myViolet
+        nextColor = MY_VIOLET
     if randnum == 6:
-        nextColor = myBrown
+        nextColor = MY_BROWN
     if randnum == 7:
-        nextColor = myGrey
+        nextColor = MY_GREY
     return nextColor
 
 def drawHorizontalBorders():
-    pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
+    pygame.draw.rect(screen, MY_BLACK, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
     for i in range(1, NUMBER_OF_ROWS + 1):
-        pygame.draw.rect(screen, myBlack, (0, i * SQUARE_WIDTH - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
+        pygame.draw.rect(screen, MY_BLACK, (0, i * SQUARE_WIDTH - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
 
 def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
-        pygame.draw.rect(screen, myBlack, (i * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, BORDER_THICKNESS, APP_Y_SIZE))
+        pygame.draw.rect(screen, MY_BLACK, (i * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 def drawColorSquare(whichSquareInCurrentRow, whichRow):
     pygame.draw.rect(screen, getRandomColor(), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
-pygame.display.set_caption(windowTitle)
+pygame.display.set_caption(WINDOW_TITLE)
 pygame.mouse.set_visible(True)
 squareThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
-squareThatIsTheSizeOfTheScreen.fill((255, 255, 255))
+squareThatIsTheSizeOfTheScreen.fill(MY_WHITE)
 screen.blit(squareThatIsTheSizeOfTheScreen, (0, 0))
 pygame.display.flip()
 
