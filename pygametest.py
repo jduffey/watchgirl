@@ -54,11 +54,19 @@ def getColor(currentDigest, whichSquareInCurrentRow, whichRow):
 def drawHorizontalBorders():
     pygame.draw.rect(screen, MY_BLACK, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
     for i in range(1, NUMBER_OF_ROWS + 1):
-        pygame.draw.rect(screen, MY_BLACK, (0, i * SQUARE_WIDTH - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
+        topLeftX = 0
+        topLeftY = i * SQUARE_WIDTH - BORDER_THICKNESS
+        bottomRightX = APP_X_SIZE + BORDER_THICKNESS
+        bottomRightY = BORDER_THICKNESS
+        pygame.draw.rect(screen, MY_BLACK, (topLeftX, topLeftY, bottomRightX, bottomRightY))
 
 def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
-        pygame.draw.rect(screen, MY_BLACK, (i * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, BORDER_THICKNESS, APP_Y_SIZE))
+        topLeftX = i * APP_X_SIZE/NUMBER_OF_COLUMNS
+        topLeftY = 0
+        bottomRightX = BORDER_THICKNESS
+        bottomRightY = APP_Y_SIZE
+        pygame.draw.rect(screen, MY_BLACK, (topLeftX, topLeftY, bottomRightX, bottomRightY))
 
 def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
     pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
