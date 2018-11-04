@@ -10,10 +10,10 @@ PERIOD_IN_SECONDS = 1
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
-SQUARE_WIDTH = 100
+SQUARE_WIDTH = 30
 
-NUMBER_OF_COLUMNS = 8
-NUMBER_OF_ROWS = 1
+NUMBER_OF_COLUMNS = 20
+NUMBER_OF_ROWS = 20
 
 APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
 APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
@@ -31,7 +31,7 @@ MY_BLACK = (0, 0, 0)
 MY_WHITE = (255, 255, 255)
 
 
-def getColor(currentDigest, whichSquareInCurrentRow):
+def getColor(currentDigest, whichSquareInCurrentRow, whichRow):
     digitToAssess = currentDigest[whichSquareInCurrentRow]
     if digitToAssess == '0' or digitToAssess == '8':
         nextColor = MY_RED
@@ -49,7 +49,6 @@ def getColor(currentDigest, whichSquareInCurrentRow):
         nextColor = MY_BROWN
     if digitToAssess == '7' or digitToAssess == 'f':
         nextColor = MY_GREY
-    print(digitToAssess)
     return nextColor
 
 def drawHorizontalBorders():
@@ -62,10 +61,10 @@ def drawVerticalBorders():
         pygame.draw.rect(screen, MY_BLACK, (i * APP_X_SIZE/NUMBER_OF_COLUMNS, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
 def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
-    pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
+    pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
 
-def generateDigestForCurrentTime():
-    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS)
+def generateDigestForCurrentTime(whichSquareInCurrentRow):
+    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichRow)
 
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(WINDOW_TITLE)
@@ -80,18 +79,14 @@ isDrawingActive = True
 
 while isDrawingActive:
 
-    currentDigest = generateDigestForCurrentTime()
-    print(time.time())
-    print(currentDigest)
-
-    for whichRow in range(0, NUMBER_OF_ROWS):    
+    for whichRow in range(0, NUMBER_OF_ROWS):
+        currentDigest = generateDigestForCurrentTime(whichRow)
+        print(currentDigest)    
         for whichSquareInCurrentRow in range(0, NUMBER_OF_COLUMNS):
             drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest)
 
     drawHorizontalBorders()
     drawVerticalBorders()
-
-    #print(time.time())
 
     pygame.display.flip()
 
