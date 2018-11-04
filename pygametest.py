@@ -7,7 +7,7 @@ import random
 windowTitle = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 5
-NUMBER_OF_SQUARES = 4
+NUMBER_OF_SQUARES = 5
 SQUARE_WIDTH = 150
 PERIOD_IN_SECONDS = 1
 
@@ -27,6 +27,7 @@ squareOne = (0, 0, 1 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
 squareTwo = (1 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 2 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
 squareThree = (2 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 3 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
 squareFour = (3 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 4 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
+squareFive = (4 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, 5 * APP_X_SIZE/NUMBER_OF_SQUARES, APP_Y_SIZE)
 
 
 def getRandomColor():
@@ -49,6 +50,7 @@ def drawSquareBorders():
     pygame.draw.rect(screen, myBlack, (1 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
     pygame.draw.rect(screen, myBlack, (2 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
     pygame.draw.rect(screen, myBlack, (3 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
+    pygame.draw.rect(screen, myBlack, (4 * APP_X_SIZE/NUMBER_OF_SQUARES, 0, BORDER_THICKNESS, APP_Y_SIZE))
 
     pygame.draw.rect(screen, myBlack, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
     pygame.draw.rect(screen, myBlack, (0, APP_Y_SIZE - BORDER_THICKNESS, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
@@ -75,6 +77,7 @@ while isDrawingActive:
     drawColorSquare(squareTwo)
     drawColorSquare(squareThree)
     drawColorSquare(squareFour)
+    drawColorSquare(squareFive)
 
     drawSquareBorders()
 
