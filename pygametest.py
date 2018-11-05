@@ -5,18 +5,18 @@ import random
 import jedhash
 
 SECRET = "PRIVATE_KEY_GOES_HERE"
-PERIOD_IN_SECONDS = 3
+PERIOD_IN_SECONDS = 1
 
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
-BORDER_THICKNESS = 5
-SQUARE_WIDTH = 100
+BORDER_THICKNESS = 2
+SQUARE_WIDTH = 20
 
-NUMBER_OF_COLUMNS = 12
-NUMBER_OF_ROWS = 8
+NUMBER_OF_COLUMNS = 30
+NUMBER_OF_ROWS = 20
 
-APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH
-APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH
+APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH + BORDER_THICKNESS * ( NUMBER_OF_COLUMNS + 1 )
+APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH + BORDER_THICKNESS * ( NUMBER_OF_ROWS + 1 )
 
 MY_RED = (255, 0, 0)
 MY_ORANGE = (255, 127, 0)
@@ -52,27 +52,26 @@ def getColor(currentDigest, whichSquareInCurrentRow, whichRow):
     return nextColor
 
 def drawHorizontalBorders():
-    pygame.draw.rect(screen, MY_BLACK, (0, 0, APP_X_SIZE + BORDER_THICKNESS, BORDER_THICKNESS))
-    for i in range(1, NUMBER_OF_ROWS + 1):
+    for i in range(0, NUMBER_OF_ROWS + 1):
         topLeftX = 0
-        topLeftY = i * SQUARE_WIDTH - BORDER_THICKNESS
-        bottomRightX = APP_X_SIZE + BORDER_THICKNESS
+        topLeftY = i * ( BORDER_THICKNESS + SQUARE_WIDTH )
+        bottomRightX = APP_X_SIZE
         bottomRightY = BORDER_THICKNESS
         pygame.draw.rect(screen, MY_BLACK, (topLeftX, topLeftY, bottomRightX, bottomRightY))
 
 def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
-        topLeftX = i * APP_X_SIZE/NUMBER_OF_COLUMNS
+        topLeftX = i * APP_X_SIZE / NUMBER_OF_COLUMNS
         topLeftY = 0
         bottomRightX = BORDER_THICKNESS
         bottomRightY = APP_Y_SIZE
         pygame.draw.rect(screen, MY_BLACK, (topLeftX, topLeftY, bottomRightX, bottomRightY))
 
 def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
-    topLeftX = whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS
-    topLeftY = whichRow * APP_Y_SIZE / NUMBER_OF_ROWS
-    bottomRightX = (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS
-    bottomRightY = (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS
+    topLeftX = BORDER_THICKNESS + whichSquareInCurrentRow * ( SQUARE_WIDTH + BORDER_THICKNESS )
+    topLeftY = BORDER_THICKNESS + whichRow * ( SQUARE_WIDTH + BORDER_THICKNESS )
+    bottomRightX = SQUARE_WIDTH + whichSquareInCurrentRow
+    bottomRightY = SQUARE_WIDTH + whichRow
     theSquareToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
     pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), theSquareToDraw)
 
