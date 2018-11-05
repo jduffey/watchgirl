@@ -69,7 +69,12 @@ def drawVerticalBorders():
         pygame.draw.rect(screen, MY_BLACK, (topLeftX, topLeftY, bottomRightX, bottomRightY))
 
 def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
-    pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), (whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS, whichRow * APP_Y_SIZE / NUMBER_OF_ROWS, (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS, (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS))
+    topLeftX = whichSquareInCurrentRow * APP_X_SIZE/NUMBER_OF_COLUMNS
+    topLeftY = whichRow * APP_Y_SIZE / NUMBER_OF_ROWS
+    bottomRightX = (whichSquareInCurrentRow + 1) * APP_X_SIZE/NUMBER_OF_COLUMNS
+    bottomRightY = (whichRow + 1) * APP_Y_SIZE / NUMBER_OF_ROWS
+    theSquareToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
+    pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), theSquareToDraw)
 
 def generateDigestForCurrentTime(whichSquareInCurrentRow):
     return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichSquareInCurrentRow)
