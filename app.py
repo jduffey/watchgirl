@@ -22,7 +22,7 @@ print('Period (sec):   ' + str(periodInput))
 
 for i in range(10):
 
-    outerHash = jedhash.returnTheHash(secretInput, periodInput)
+    outerHash = jedhash.returnTheHash(secretInput, periodInput, offset=0)
     print('Final hash:     ' + outerHash)
     rightMostOfHash = outerHash[-4:]
     print('Rightmost:      ' + rightMostOfHash)
