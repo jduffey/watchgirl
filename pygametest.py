@@ -15,8 +15,8 @@ SQUARE_WIDTH = 20
 NUMBER_OF_COLUMNS = 30
 NUMBER_OF_ROWS = 20
 
-APP_X_SIZE = NUMBER_OF_COLUMNS * SQUARE_WIDTH + BORDER_THICKNESS * ( NUMBER_OF_COLUMNS + 1 )
-APP_Y_SIZE = NUMBER_OF_ROWS * SQUARE_WIDTH + BORDER_THICKNESS * ( NUMBER_OF_ROWS + 1 )
+APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( SQUARE_WIDTH + BORDER_THICKNESS )
+APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( SQUARE_WIDTH + BORDER_THICKNESS )
 
 MY_RED = (255, 0, 0)
 MY_ORANGE = (255, 127, 0)
@@ -57,7 +57,8 @@ def drawHorizontalBorders():
         topLeftY = i * ( BORDER_THICKNESS + SQUARE_WIDTH )
         bottomRightX = APP_X_SIZE
         bottomRightY = BORDER_THICKNESS
-        pygame.draw.rect(screen, MY_BLACK, (topLeftX, topLeftY, bottomRightX, bottomRightY))
+        theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
+        pygame.draw.rect(screen, MY_BLACK, theRectangleToDraw)
 
 def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
@@ -65,7 +66,8 @@ def drawVerticalBorders():
         topLeftY = 0
         bottomRightX = BORDER_THICKNESS
         bottomRightY = APP_Y_SIZE
-        pygame.draw.rect(screen, MY_BLACK, (topLeftX, topLeftY, bottomRightX, bottomRightY))
+        theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
+        pygame.draw.rect(screen, MY_BLACK, theRectangleToDraw)
 
 def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
     topLeftX = BORDER_THICKNESS + whichSquareInCurrentRow * ( SQUARE_WIDTH + BORDER_THICKNESS )
