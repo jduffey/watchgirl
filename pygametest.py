@@ -9,9 +9,9 @@ PERIOD_IN_SECONDS = 1
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 10
-SQUARE_WIDTH = 150
+SQUARE_WIDTH = 10
 
-NUMBER_OF_COLUMNS = 5
+NUMBER_OF_COLUMNS = 65
 NUMBER_OF_ROWS = 4
 
 APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( SQUARE_WIDTH + BORDER_THICKNESS )
@@ -28,6 +28,8 @@ MY_GREY = (40, 40, 40)
 
 MY_BLACK = (0, 0, 0)
 MY_WHITE = (255, 255, 255)
+
+SIZE_OF_DIGEST_USED = 64
 
 
 def getColor(currentDigest, whichSquareInCurrentRow, whichRow):
@@ -91,6 +93,10 @@ pygame.init()
 isDrawingActive = True
 
 while isDrawingActive:
+
+    if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
+        print('ERROR: Too many columns! Max size is ' + str(SIZE_OF_DIGEST_USED))
+        break
 
     for whichRow in range(0, NUMBER_OF_ROWS):
         offset = whichRow * PERIOD_IN_SECONDS
