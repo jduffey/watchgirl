@@ -81,6 +81,11 @@ def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
 def generateDigestForCurrentTime(whichSquareInCurrentRow):
     return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichSquareInCurrentRow)
 
+def validateNumberOfColumns():
+        if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
+            print('ERROR: Too many columns! Max size is ' + str(SIZE_OF_DIGEST_USED))
+        return NUMBER_OF_COLUMNS <= SIZE_OF_DIGEST_USED
+
 screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
 pygame.display.set_caption(WINDOW_TITLE)
 pygame.mouse.set_visible(True)
@@ -94,8 +99,7 @@ isDrawingActive = True
 
 while isDrawingActive:
 
-    if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
-        print('ERROR: Too many columns! Max size is ' + str(SIZE_OF_DIGEST_USED))
+    if not validateNumberOfColumns():
         break
 
     for whichRow in range(0, NUMBER_OF_ROWS):
