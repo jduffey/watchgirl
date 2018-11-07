@@ -97,10 +97,10 @@ pygame.display.flip()
 pygame.init()
 isDrawingActive = True
 
-while isDrawingActive:
+if not validateNumberOfColumns():
+    exit()
 
-    if not validateNumberOfColumns():
-        break
+while isDrawingActive:
 
     for whichRow in range(0, NUMBER_OF_ROWS):
         offset = whichRow * PERIOD_IN_SECONDS
