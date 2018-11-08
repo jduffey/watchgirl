@@ -34,21 +34,31 @@ SIZE_OF_DIGEST_USED = 64
 
 def getColor(currentDigest, whichSquareInCurrentRow, whichRow):
     digitToAssess = currentDigest[whichSquareInCurrentRow]
-    if digitToAssess == '0' or digitToAssess == '8':
+
+    case1 = digitToAssess == '0' or digitToAssess == '8'
+    case2 = digitToAssess == '1' or digitToAssess == '9'
+    case3 = digitToAssess == '2' or digitToAssess == 'a'
+    case4 = digitToAssess == '3' or digitToAssess == 'b'
+    case5 = digitToAssess == '4' or digitToAssess == 'c'
+    case6 = digitToAssess == '5' or digitToAssess == 'd'
+    case7 = digitToAssess == '6' or digitToAssess == 'e'
+    case8 = digitToAssess == '7' or digitToAssess == 'f'
+
+    if case1:
         nextColor = MY_RED
-    if digitToAssess == '1' or digitToAssess == '9':
+    if case2:
         nextColor = MY_ORANGE
-    if digitToAssess == '2' or digitToAssess == 'a':
+    if case3:
         nextColor = MY_YELLOW
-    if digitToAssess == '3' or digitToAssess == 'b':
+    if case4:
         nextColor = MY_GREEN
-    if digitToAssess == '4' or digitToAssess == 'c':
+    if case5:
         nextColor = MY_BLUE
-    if digitToAssess == '5' or digitToAssess == 'd':
+    if case6:
         nextColor = MY_VIOLET
-    if digitToAssess == '6' or digitToAssess == 'e':
+    if case7:
         nextColor = MY_BROWN
-    if digitToAssess == '7' or digitToAssess == 'f':
+    if case8:
         nextColor = MY_GREY
     return nextColor
 
