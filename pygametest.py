@@ -9,9 +9,9 @@ PERIOD_IN_SECONDS = 1
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 10
-SQUARE_WIDTH = 10
+SQUARE_WIDTH = 150
 
-NUMBER_OF_COLUMNS = 65
+NUMBER_OF_COLUMNS = 6
 NUMBER_OF_ROWS = 4
 
 APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( SQUARE_WIDTH + BORDER_THICKNESS )
@@ -73,7 +73,7 @@ def drawHorizontalBorders():
 
 def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
-        topLeftX = i * APP_X_SIZE / NUMBER_OF_COLUMNS
+        topLeftX = i * ( BORDER_THICKNESS + SQUARE_WIDTH )
         topLeftY = 0
         bottomRightX = BORDER_THICKNESS
         bottomRightY = APP_Y_SIZE
@@ -83,8 +83,8 @@ def drawVerticalBorders():
 def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
     topLeftX = BORDER_THICKNESS + whichSquareInCurrentRow * ( SQUARE_WIDTH + BORDER_THICKNESS )
     topLeftY = BORDER_THICKNESS + whichRow * ( SQUARE_WIDTH + BORDER_THICKNESS )
-    bottomRightX = SQUARE_WIDTH + whichSquareInCurrentRow
-    bottomRightY = SQUARE_WIDTH + whichRow
+    bottomRightX = SQUARE_WIDTH
+    bottomRightY = SQUARE_WIDTH
     theSquareToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
     pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), theSquareToDraw)
 
@@ -96,7 +96,7 @@ def validateNumberOfColumns():
             print('ERROR: Too many columns! Max size is ' + str(SIZE_OF_DIGEST_USED))
         return NUMBER_OF_COLUMNS <= SIZE_OF_DIGEST_USED
 
-screen = pygame.display.set_mode((APP_X_SIZE + BORDER_THICKNESS, APP_Y_SIZE))
+screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
 pygame.display.set_caption(WINDOW_TITLE)
 pygame.mouse.set_visible(True)
 squareThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
