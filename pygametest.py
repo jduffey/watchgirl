@@ -9,13 +9,15 @@ PERIOD_IN_SECONDS = 1
 WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 10
-SQUARE_WIDTH = 150
+
+ICON_SIZE_X = 150
+ICON_SIZE_Y = 450
 
 NUMBER_OF_COLUMNS = 6
-NUMBER_OF_ROWS = 4
+NUMBER_OF_ROWS = 1
 
-APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( SQUARE_WIDTH + BORDER_THICKNESS )
-APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( SQUARE_WIDTH + BORDER_THICKNESS )
+APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
+APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( ICON_SIZE_Y + BORDER_THICKNESS )
 
 MY_RED = (255, 0, 0)
 MY_ORANGE = (255, 127, 0)
@@ -32,8 +34,8 @@ MY_WHITE = (255, 255, 255)
 SIZE_OF_DIGEST_USED = 64
 
 
-def getColor(currentDigest, whichSquareInCurrentRow, whichRow):
-    digitToAssess = currentDigest[whichSquareInCurrentRow]
+def getColor(currentDigest, whichIconInCurrentRow, whichRow):
+    digitToAssess = currentDigest[whichIconInCurrentRow]
 
     case1 = digitToAssess == '0' or digitToAssess == '8'
     case2 = digitToAssess == '1' or digitToAssess == '9'
@@ -65,7 +67,7 @@ def getColor(currentDigest, whichSquareInCurrentRow, whichRow):
 def drawHorizontalBorders():
     for i in range(0, NUMBER_OF_ROWS + 1):
         topLeftX = 0
-        topLeftY = i * ( BORDER_THICKNESS + SQUARE_WIDTH )
+        topLeftY = i * ( BORDER_THICKNESS + ICON_SIZE_Y )
         bottomRightX = APP_X_SIZE
         bottomRightY = BORDER_THICKNESS
         theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
@@ -73,23 +75,23 @@ def drawHorizontalBorders():
 
 def drawVerticalBorders():
     for i in range(0, NUMBER_OF_COLUMNS + 1):
-        topLeftX = i * ( BORDER_THICKNESS + SQUARE_WIDTH )
+        topLeftX = i * ( BORDER_THICKNESS + ICON_SIZE_X )
         topLeftY = 0
         bottomRightX = BORDER_THICKNESS
         bottomRightY = APP_Y_SIZE
         theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
         pygame.draw.rect(screen, MY_BLACK, theRectangleToDraw)
 
-def drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest):
-    topLeftX = BORDER_THICKNESS + whichSquareInCurrentRow * ( SQUARE_WIDTH + BORDER_THICKNESS )
-    topLeftY = BORDER_THICKNESS + whichRow * ( SQUARE_WIDTH + BORDER_THICKNESS )
-    bottomRightX = SQUARE_WIDTH
-    bottomRightY = SQUARE_WIDTH
-    theSquareToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
-    pygame.draw.rect(screen, getColor(currentDigest, whichSquareInCurrentRow, whichRow), theSquareToDraw)
+def drawColorIcon(whichIconInCurrentRow, whichRow, currentDigest):
+    topLeftX = BORDER_THICKNESS + whichIconInCurrentRow * ( ICON_SIZE_X + BORDER_THICKNESS )
+    topLeftY = BORDER_THICKNESS + whichRow * ( ICON_SIZE_Y + BORDER_THICKNESS )
+    bottomRightX = ICON_SIZE_X
+    bottomRightY = ICON_SIZE_Y
+    theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
+    pygame.draw.rect(screen, getColor(currentDigest, whichIconInCurrentRow, whichRow), theRectangleToDraw)
 
-def generateDigestForCurrentTime(whichSquareInCurrentRow):
-    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichSquareInCurrentRow)
+def generateDigestForCurrentTime(whichIconInCurrentRow):
+    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichIconInCurrentRow)
 
 def validateNumberOfColumns():
         if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
@@ -99,9 +101,9 @@ def validateNumberOfColumns():
 screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
 pygame.display.set_caption(WINDOW_TITLE)
 pygame.mouse.set_visible(True)
-squareThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
-squareThatIsTheSizeOfTheScreen.fill(MY_WHITE)
-screen.blit(squareThatIsTheSizeOfTheScreen, (0, 0))
+rectangleThatIsTheSizeOfTheScreen = pygame.Surface(screen.get_size())
+rectangleThatIsTheSizeOfTheScreen.fill(MY_WHITE)
+screen.blit(rectangleThatIsTheSizeOfTheScreen, (0, 0))
 pygame.display.flip()
 
 pygame.init()
@@ -115,8 +117,8 @@ while isDrawingActive:
     for whichRow in range(0, NUMBER_OF_ROWS):
         offset = whichRow * PERIOD_IN_SECONDS
         currentDigest = generateDigestForCurrentTime(offset)
-        for whichSquareInCurrentRow in range(0, NUMBER_OF_COLUMNS):
-            drawColorSquare(whichSquareInCurrentRow, whichRow, currentDigest)
+        for whichIconInCurrentRow in range(0, NUMBER_OF_COLUMNS):
+            drawColorIcon(whichIconInCurrentRow, whichRow, currentDigest)
 
     drawHorizontalBorders()
     drawVerticalBorders()
