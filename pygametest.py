@@ -14,7 +14,7 @@ ICON_SIZE_X = 150
 ICON_SIZE_Y = 450
 
 NUMBER_OF_COLUMNS = 6
-NUMBER_OF_ROWS = 1
+NUMBER_OF_ROWS = 2
 
 APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
 APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( ICON_SIZE_Y + BORDER_THICKNESS )
@@ -34,8 +34,8 @@ MY_WHITE = (255, 255, 255)
 SIZE_OF_DIGEST_USED = 64
 
 
-def getColor(currentDigest, whichIconInCurrentRow, whichRow):
-    digitToAssess = currentDigest[whichIconInCurrentRow]
+def getColor(currentDigest, indexOfCurrentDigest):
+    digitToAssess = currentDigest[indexOfCurrentDigest]
 
     case1 = digitToAssess == '0' or digitToAssess == '8'
     case2 = digitToAssess == '1' or digitToAssess == '9'
@@ -88,10 +88,10 @@ def drawColorIcon(whichIconInCurrentRow, whichRow, currentDigest):
     bottomRightX = ICON_SIZE_X
     bottomRightY = ICON_SIZE_Y
     theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
-    pygame.draw.rect(screen, getColor(currentDigest, whichIconInCurrentRow, whichRow), theRectangleToDraw)
+    pygame.draw.rect(screen, getColor(currentDigest, 0), theRectangleToDraw)
 
-def generateDigestForCurrentTime(whichIconInCurrentRow):
-    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, whichIconInCurrentRow)
+def generateDigestForCurrentTime(offset):
+    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, offset)
 
 def validateNumberOfColumns():
         if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
@@ -115,9 +115,9 @@ if not validateNumberOfColumns():
 while isDrawingActive:
 
     for whichRow in range(0, NUMBER_OF_ROWS):
-        offset = whichRow * PERIOD_IN_SECONDS
-        currentDigest = generateDigestForCurrentTime(offset)
+
         for whichIconInCurrentRow in range(0, NUMBER_OF_COLUMNS):
+            currentDigest = generateDigestForCurrentTime(whichIconInCurrentRow)
             drawColorIcon(whichIconInCurrentRow, whichRow, currentDigest)
 
     drawHorizontalBorders()
