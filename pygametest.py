@@ -10,11 +10,11 @@ WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
 
 BORDER_THICKNESS = 10
 
-ICON_SIZE_X = 100
-ICON_SIZE_Y = 100
+ICON_SIZE_X = 50
+ICON_SIZE_Y = 50
 
-NUMBER_OF_COLUMNS = 8
-NUMBER_OF_ROWS = 5
+NUMBER_OF_COLUMNS = 5
+NUMBER_OF_ROWS = 12
 
 APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
 APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( ICON_SIZE_Y + BORDER_THICKNESS )
@@ -34,8 +34,8 @@ MY_WHITE = (255, 255, 255)
 SIZE_OF_DIGEST_USED = 64
 
 
-def getColor(currentDigest, indexOfCurrentDigest):
-    digitToAssess = currentDigest[indexOfCurrentDigest]
+def getColor(digitToUseForCurrentColor):
+    digitToAssess = digitToUseForCurrentColor
 
     case1 = digitToAssess == '0' or digitToAssess == '8'
     case2 = digitToAssess == '1' or digitToAssess == '9'
@@ -82,16 +82,16 @@ def drawVerticalBorders():
         theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
         pygame.draw.rect(screen, MY_BLACK, theRectangleToDraw)
 
-def drawColorIcon(whichIconInCurrentRow, whichRow, currentDigest):
+def drawColorIcon(whichIconInCurrentRow, whichRow, digitToUseForCurrentColor):
     topLeftX = BORDER_THICKNESS + whichIconInCurrentRow * ( ICON_SIZE_X + BORDER_THICKNESS )
     topLeftY = BORDER_THICKNESS + whichRow * ( ICON_SIZE_Y + BORDER_THICKNESS )
     bottomRightX = ICON_SIZE_X
     bottomRightY = ICON_SIZE_Y
     theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
-    pygame.draw.rect(screen, getColor(currentDigest, 0), theRectangleToDraw)
+    pygame.draw.rect(screen, getColor(digitToUseForCurrentColor), theRectangleToDraw)
 
-def generateDigestForCurrentTime(offset):
-    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, offset)
+def generateDigest(timeOffset):
+    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, timeOffset)
 
 def validateNumberOfColumns():
         if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
@@ -116,9 +116,21 @@ while isDrawingActive:
 
     for whichRow in range(0, NUMBER_OF_ROWS):
 
+        theDigitsOfThisRow = ''
+
         for whichIconInCurrentRow in range(0, NUMBER_OF_COLUMNS):
-            currentDigest = generateDigestForCurrentTime(whichIconInCurrentRow)
-            drawColorIcon(whichIconInCurrentRow, whichRow, currentDigest)
+
+            digestToUseForCurrentIcon = generateDigest(whichIconInCurrentRow)
+
+            digitToUseForCurrentColor = digestToUseForCurrentIcon[whichRow]
+            theDigitsOfThisRow += digitToUseForCurrentColor
+
+            drawColorIcon(whichIconInCurrentRow, whichRow, digitToUseForCurrentColor)
+
+            if whichRow == 0:
+                print(digestToUseForCurrentIcon)
+
+        print('Row ' + str(whichRow) + ': ' + str(theDigitsOfThisRow))
 
     drawHorizontalBorders()
     drawVerticalBorders()
