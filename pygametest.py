@@ -13,8 +13,8 @@ BORDER_THICKNESS = 10
 ICON_SIZE_X = 50
 ICON_SIZE_Y = 50
 
-NUMBER_OF_COLUMNS = 5
-NUMBER_OF_ROWS = 12
+NUMBER_OF_COLUMNS = 8
+NUMBER_OF_ROWS = 4
 
 APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
 APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( ICON_SIZE_Y + BORDER_THICKNESS )
@@ -82,8 +82,8 @@ def drawVerticalBorders():
         theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
         pygame.draw.rect(screen, MY_BLACK, theRectangleToDraw)
 
-def drawColorIcon(whichIconInCurrentRow, whichRow, digitToUseForCurrentColor):
-    topLeftX = BORDER_THICKNESS + whichIconInCurrentRow * ( ICON_SIZE_X + BORDER_THICKNESS )
+def drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor):
+    topLeftX = BORDER_THICKNESS + whichColumn * ( ICON_SIZE_X + BORDER_THICKNESS )
     topLeftY = BORDER_THICKNESS + whichRow * ( ICON_SIZE_Y + BORDER_THICKNESS )
     bottomRightX = ICON_SIZE_X
     bottomRightY = ICON_SIZE_Y
@@ -114,28 +114,27 @@ if not validateNumberOfColumns():
 
 while isDrawingActive:
 
-    for whichRow in range(0, NUMBER_OF_ROWS):
+    print()
+    print(time.time())
 
-        theDigitsOfThisRow = ''
+    for whichColumn in range(0, NUMBER_OF_COLUMNS):
 
-        for whichIconInCurrentRow in range(0, NUMBER_OF_COLUMNS):
+        for whichRow in range(0, NUMBER_OF_ROWS):
 
-            digestToUseForCurrentIcon = generateDigest(whichIconInCurrentRow)
+            digestTimeOffset = PERIOD_IN_SECONDS * (whichColumn - whichRow)
 
-            digitToUseForCurrentColor = digestToUseForCurrentIcon[whichRow]
-            theDigitsOfThisRow += digitToUseForCurrentColor
+            digestToUseForCurrentIcon = generateDigest(digestTimeOffset)
 
-            drawColorIcon(whichIconInCurrentRow, whichRow, digitToUseForCurrentColor)
+            digitToUseForCurrentColor = digestToUseForCurrentIcon[0]
 
-            if whichRow == 0:
-                print(digestToUseForCurrentIcon)
+            #theDigitsOfThisRow += digitToUseForCurrentColor
 
-        print('Row ' + str(whichRow) + ': ' + str(theDigitsOfThisRow))
+            drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor)
+
+    #print('Row ' + str(whichRow) + ': ' + str(theDigitsOfThisRow))
 
     drawHorizontalBorders()
     drawVerticalBorders()
-
-    print(time.time())
 
     pygame.display.flip()
 
