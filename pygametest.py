@@ -23,8 +23,6 @@ MY_GREY = config['MY_GREY']
 MY_BLACK = config['MY_BLACK']
 MY_WHITE = config['MY_WHITE']
 
-SIZE_OF_DIGEST_USED = 64
-
 
 def getColor(digitToUseForCurrentColor):
     digitToAssess = digitToUseForCurrentColor
@@ -83,12 +81,7 @@ def drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor):
     pygame.draw.rect(screen, getColor(digitToUseForCurrentColor), theRectangleToDraw)
 
 def generateDigest(timeOffset):
-    return jedhash.returnTheHash(config['SECRET'], config['PERIOD_IN_SECONDS'], timeOffset)
-
-def validateNumberOfColumns():
-        if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
-            print('ERROR: Too many columns! Max size is ' + str(SIZE_OF_DIGEST_USED))
-        return NUMBER_OF_COLUMNS <= SIZE_OF_DIGEST_USED
+    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, timeOffset)
 
 
 APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
@@ -105,8 +98,6 @@ pygame.display.flip()
 pygame.init()
 isDrawingActive = True
 
-if not validateNumberOfColumns():
-    exit()
 
 while isDrawingActive:
 
@@ -123,11 +114,7 @@ while isDrawingActive:
 
             digitToUseForCurrentColor = digestToUseForCurrentIcon[0]
 
-            #theDigitsOfThisRow += digitToUseForCurrentColor
-
             drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor)
-
-    #print('Row ' + str(whichRow) + ': ' + str(theDigitsOfThisRow))
 
     drawHorizontalBorders()
     drawVerticalBorders()
