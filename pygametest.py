@@ -2,34 +2,26 @@ import pygame
 from pygame.locals import *
 import time
 import jedhash
+from pygame_config import config
 
-SECRET = "PRIVATE_KEY_GOES_HERE"
-PERIOD_IN_SECONDS = 1
-
-WINDOW_TITLE = 'Identifier #580CD2E889BD - Onett Art Museum Main Entrance'
-
-BORDER_THICKNESS = 10
-
-ICON_SIZE_X = 50
-ICON_SIZE_Y = 50
-
-NUMBER_OF_COLUMNS = 8
-NUMBER_OF_ROWS = 4
-
-APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
-APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( ICON_SIZE_Y + BORDER_THICKNESS )
-
-MY_RED = (255, 0, 0)
-MY_ORANGE = (255, 127, 0)
-MY_YELLOW = (255, 255, 0)
-MY_GREEN = (0, 255, 0)
-MY_BLUE = (0, 0, 255)
-MY_VIOLET = (75, 0, 130)
-MY_BROWN = (102, 51, 0)
-MY_GREY = (40, 40, 40)
-
-MY_BLACK = (0, 0, 0)
-MY_WHITE = (255, 255, 255)
+SECRET = config['SECRET']
+PERIOD_IN_SECONDS = config['PERIOD_IN_SECONDS']
+WINDOW_TITLE = config['WINDOW_TITLE']
+BORDER_THICKNESS = config['BORDER_THICKNESS']
+ICON_SIZE_X = config['ICON_SIZE_X']
+ICON_SIZE_Y = config['ICON_SIZE_Y']
+NUMBER_OF_COLUMNS = config['NUMBER_OF_COLUMNS']
+NUMBER_OF_ROWS = config['NUMBER_OF_ROWS']
+MY_RED = config['MY_RED']
+MY_ORANGE = config['MY_ORANGE']
+MY_YELLOW = config['MY_YELLOW']
+MY_GREEN = config['MY_GREEN']
+MY_BLUE = config['MY_BLUE']
+MY_VIOLET = config['MY_VIOLET']
+MY_BROWN = config['MY_BROWN']
+MY_GREY = config['MY_GREY']
+MY_BLACK = config['MY_BLACK']
+MY_WHITE = config['MY_WHITE']
 
 SIZE_OF_DIGEST_USED = 64
 
@@ -91,12 +83,16 @@ def drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor):
     pygame.draw.rect(screen, getColor(digitToUseForCurrentColor), theRectangleToDraw)
 
 def generateDigest(timeOffset):
-    return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, timeOffset)
+    return jedhash.returnTheHash(config['SECRET'], config['PERIOD_IN_SECONDS'], timeOffset)
 
 def validateNumberOfColumns():
         if(NUMBER_OF_COLUMNS > SIZE_OF_DIGEST_USED):
             print('ERROR: Too many columns! Max size is ' + str(SIZE_OF_DIGEST_USED))
         return NUMBER_OF_COLUMNS <= SIZE_OF_DIGEST_USED
+
+
+APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
+APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( ICON_SIZE_Y + BORDER_THICKNESS )
 
 screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
 pygame.display.set_caption(WINDOW_TITLE)
