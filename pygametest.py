@@ -102,7 +102,9 @@ isDrawingActive = True
 while isDrawingActive:
 
     print()
-    print(time.time())
+    digestsGeneratedThisLoop = 0
+    startTime = time.time()
+    print('Loop start: ' + str(startTime))
 
     for whichColumn in range(0, NUMBER_OF_COLUMNS):
 
@@ -111,15 +113,21 @@ while isDrawingActive:
             digestTimeOffset = PERIOD_IN_SECONDS * (whichColumn - whichRow)
 
             digestToUseForCurrentIcon = generateDigest(digestTimeOffset)
+            digestsGeneratedThisLoop += 1
 
             digitToUseForCurrentColor = digestToUseForCurrentIcon[0]
 
             drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor)
 
+    millisecondsOfLoop = 1000 * (time.time() - startTime)
+
     drawHorizontalBorders()
     drawVerticalBorders()
 
     pygame.display.flip()
+
+    print('  ms taken: ' + str(millisecondsOfLoop))
+    print('   Digests: ' + str(digestsGeneratedThisLoop))
 
     # if the 'X' button is pressed the window should close:
     Geesh = pygame.event.get()
