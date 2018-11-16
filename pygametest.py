@@ -26,30 +26,21 @@ MY_WHITE = config['MY_WHITE']
 
 def getColor(digitToUseForColor):
 
-    case1 = digitToUseForColor == '0' or digitToUseForColor == '8'
-    case2 = digitToUseForColor == '1' or digitToUseForColor == '9'
-    case3 = digitToUseForColor == '2' or digitToUseForColor == 'a'
-    case4 = digitToUseForColor == '3' or digitToUseForColor == 'b'
-    case5 = digitToUseForColor == '4' or digitToUseForColor == 'c'
-    case6 = digitToUseForColor == '5' or digitToUseForColor == 'd'
-    case7 = digitToUseForColor == '6' or digitToUseForColor == 'e'
-    case8 = digitToUseForColor == '7' or digitToUseForColor == 'f'
-
-    if case1:
+    if digitToUseForColor in {'0', '8'}:
         nextColor = MY_RED
-    if case2:
+    if digitToUseForColor in {'1', '9'}:
         nextColor = MY_ORANGE
-    if case3:
+    if digitToUseForColor in {'2', 'a'}:
         nextColor = MY_YELLOW
-    if case4:
+    if digitToUseForColor in {'3', 'b'}:
         nextColor = MY_GREEN
-    if case5:
+    if digitToUseForColor in {'4', 'c'}:
         nextColor = MY_BLUE
-    if case6:
+    if digitToUseForColor in {'5', 'd'}:
         nextColor = MY_VIOLET
-    if case7:
+    if digitToUseForColor in {'6', 'e'}:
         nextColor = MY_BROWN
-    if case8:
+    if digitToUseForColor in {'7', 'f'}:
         nextColor = MY_GREY
     return nextColor
 
