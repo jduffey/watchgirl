@@ -24,17 +24,16 @@ MY_BLACK = config['MY_BLACK']
 MY_WHITE = config['MY_WHITE']
 
 
-def getColor(digitToUseForCurrentColor):
-    digitToAssess = digitToUseForCurrentColor
+def getColor(digitToUseForColor):
 
-    case1 = digitToAssess == '0' or digitToAssess == '8'
-    case2 = digitToAssess == '1' or digitToAssess == '9'
-    case3 = digitToAssess == '2' or digitToAssess == 'a'
-    case4 = digitToAssess == '3' or digitToAssess == 'b'
-    case5 = digitToAssess == '4' or digitToAssess == 'c'
-    case6 = digitToAssess == '5' or digitToAssess == 'd'
-    case7 = digitToAssess == '6' or digitToAssess == 'e'
-    case8 = digitToAssess == '7' or digitToAssess == 'f'
+    case1 = digitToUseForColor == '0' or digitToUseForColor == '8'
+    case2 = digitToUseForColor == '1' or digitToUseForColor == '9'
+    case3 = digitToUseForColor == '2' or digitToUseForColor == 'a'
+    case4 = digitToUseForColor == '3' or digitToUseForColor == 'b'
+    case5 = digitToUseForColor == '4' or digitToUseForColor == 'c'
+    case6 = digitToUseForColor == '5' or digitToUseForColor == 'd'
+    case7 = digitToUseForColor == '6' or digitToUseForColor == 'e'
+    case8 = digitToUseForColor == '7' or digitToUseForColor == 'f'
 
     if case1:
         nextColor = MY_RED
@@ -72,13 +71,13 @@ def drawVerticalBorders():
         theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
         pygame.draw.rect(screen, MY_BLACK, theRectangleToDraw)
 
-def drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor):
+def drawColorIcon(whichColumn, whichRow, digitToUseForColor):
     topLeftX = BORDER_THICKNESS + whichColumn * ( ICON_SIZE_X + BORDER_THICKNESS )
     topLeftY = BORDER_THICKNESS + whichRow * ( ICON_SIZE_Y + BORDER_THICKNESS )
     bottomRightX = ICON_SIZE_X
     bottomRightY = ICON_SIZE_Y
     theRectangleToDraw = (topLeftX, topLeftY, bottomRightX, bottomRightY)
-    pygame.draw.rect(screen, getColor(digitToUseForCurrentColor), theRectangleToDraw)
+    pygame.draw.rect(screen, getColor(digitToUseForColor), theRectangleToDraw)
 
 def generateDigest(timeOffset):
     return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, timeOffset)
@@ -115,9 +114,9 @@ while isDrawingActive:
             digestToUseForCurrentIcon = generateDigest(digestTimeOffset)
             digestsGeneratedThisLoop += 1
 
-            digitToUseForCurrentColor = digestToUseForCurrentIcon[0]
+            digitToUseForColor = digestToUseForCurrentIcon[0]
 
-            drawColorIcon(whichColumn, whichRow, digitToUseForCurrentColor)
+            drawColorIcon(whichColumn, whichRow, digitToUseForColor)
 
     millisecondsOfLoop = 1000 * (time.time() - startTime)
 
