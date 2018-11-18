@@ -41,14 +41,10 @@ def returnTheHash(secretInput, periodInput, offset):
     """
 
     secret = setSecret(secretInput)
-
+    
     period = setPeriod(periodInput)
 
     chunkedTime = getChunkedTime(period, offset)
-
-    hasedSecret = hashTheInput(secret)
-
-    hexDigestOfSecret = hasedSecret.hexdigest()
 
     innerString = setInnerString(secret, chunkedTime)
 
