@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 import time
 import jedhash
-from signalmaker_config import config
+from config import config
 
 SECRET = config['SECRET']
 PERIOD_IN_SECONDS = config['PERIOD_IN_SECONDS']
