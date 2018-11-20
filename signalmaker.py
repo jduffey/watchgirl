@@ -89,7 +89,9 @@ pygame.init()
 isDrawingActive = True
 
 
-startTime = time.time()
+# force loops to start halfway between periods
+startTime = time.time() - (time.time() % PERIOD_IN_SECONDS) + PERIOD_IN_SECONDS / 2
+print(startTime)
 
 while isDrawingActive:
 
