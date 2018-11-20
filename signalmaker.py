@@ -89,12 +89,16 @@ pygame.init()
 isDrawingActive = True
 
 
+startTime = time.time()
+
 while isDrawingActive:
 
     print()
+
+    loopStartTime = time.time()
+    print('Loop start: ' + str(loopStartTime))
+
     digestsGeneratedThisLoop = 0
-    startTime = time.time()
-    print('Loop start: ' + str(startTime))
 
     for whichColumn in range(0, NUMBER_OF_COLUMNS):
 
@@ -109,12 +113,12 @@ while isDrawingActive:
 
             drawColorIcon(whichColumn, whichRow, digitToUseForColor)
 
-    millisecondsOfLoop = 1000 * (time.time() - startTime)
-
     drawHorizontalBorders()
     drawVerticalBorders()
 
     pygame.display.flip()
+
+    millisecondsOfLoop = 1000 * (time.time() - loopStartTime)
 
     print('  ms taken: ' + str(millisecondsOfLoop))
     print('   Digests: ' + str(digestsGeneratedThisLoop))
@@ -124,4 +128,4 @@ while isDrawingActive:
     if len(Geesh) > 0:
         if Geesh[0].type == QUIT: isDrawingActive = False
 
-    time.sleep(PERIOD_IN_SECONDS)
+    time.sleep(PERIOD_IN_SECONDS - ((time.time() - startTime) % PERIOD_IN_SECONDS))
