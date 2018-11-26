@@ -73,6 +73,10 @@ def drawColorIcon(whichColumn, whichRow, digitToUseForColor):
 def generateDigest(timeOffset):
     return jedhash.returnTheHash(SECRET, PERIOD_IN_SECONDS, timeOffset)
 
+def establishStartTime():
+    # force loops to start halfway between periods
+    return time.time() - (time.time() % PERIOD_IN_SECONDS) + PERIOD_IN_SECONDS / 2
+
 
 APP_X_SIZE = BORDER_THICKNESS + NUMBER_OF_COLUMNS * ( ICON_SIZE_X + BORDER_THICKNESS )
 APP_Y_SIZE = BORDER_THICKNESS + NUMBER_OF_ROWS * ( ICON_SIZE_Y + BORDER_THICKNESS )
@@ -89,8 +93,7 @@ pygame.init()
 isDrawingActive = True
 
 
-# force loops to start halfway between periods
-startTime = time.time() - (time.time() % PERIOD_IN_SECONDS) + PERIOD_IN_SECONDS / 2
+startTime = establishStartTime()
 print(startTime)
 
 while isDrawingActive:
@@ -102,7 +105,11 @@ while isDrawingActive:
 
     digestsGeneratedThisLoop = 0
 
+    outerList = []
+
     for whichColumn in range(0, NUMBER_OF_COLUMNS):
+
+        innerList = []
 
         for whichRow in range(0, NUMBER_OF_ROWS):
 
@@ -115,6 +122,10 @@ while isDrawingActive:
 
             drawColorIcon(whichColumn, whichRow, digitToUseForColor)
 
+            innerList.append(digitToUseForColor)
+
+        outerList.append(innerList)
+
     drawHorizontalBorders()
     drawVerticalBorders()
 
@@ -124,6 +135,8 @@ while isDrawingActive:
 
     print('  ms taken: ' + str(millisecondsOfLoop))
     print('   Digests: ' + str(digestsGeneratedThisLoop))
+    for list in outerList:
+        print(list)
 
     # if the 'X' button is pressed the window should close:
     Geesh = pygame.event.get()
