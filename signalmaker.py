@@ -4,6 +4,7 @@ import time
 import jedhash
 from config import config
 
+
 SECRET = config['SECRET']
 PERIOD_IN_SECONDS = config['PERIOD_IN_SECONDS']
 WINDOW_TITLE = config['WINDOW_TITLE']
@@ -23,26 +24,28 @@ MY_GREY = config['MY_GREY']
 MY_BLACK = config['MY_BLACK']
 MY_WHITE = config['MY_WHITE']
 
+number_color_dict = {
+    '0': MY_RED,
+    '1': MY_RED,
+    '2': MY_ORANGE,
+    '3': MY_ORANGE,
+    '4': MY_YELLOW,
+    '5': MY_YELLOW,
+    '6': MY_GREEN,
+    '7': MY_GREEN,
+    '8': MY_BLUE,
+    '9': MY_BLUE,
+    'a': MY_VIOLET,
+    'b': MY_VIOLET,
+    'c': MY_BROWN,
+    'd': MY_BROWN,
+    'e': MY_GREY,
+    'f': MY_GREY
+}
+
 
 def getColor(digitToUseForColor):
-
-    if digitToUseForColor in {'0', '8'}:
-        nextColor = MY_RED
-    if digitToUseForColor in {'1', '9'}:
-        nextColor = MY_ORANGE
-    if digitToUseForColor in {'2', 'a'}:
-        nextColor = MY_YELLOW
-    if digitToUseForColor in {'3', 'b'}:
-        nextColor = MY_GREEN
-    if digitToUseForColor in {'4', 'c'}:
-        nextColor = MY_BLUE
-    if digitToUseForColor in {'5', 'd'}:
-        nextColor = MY_VIOLET
-    if digitToUseForColor in {'6', 'e'}:
-        nextColor = MY_BROWN
-    if digitToUseForColor in {'7', 'f'}:
-        nextColor = MY_GREY
-    return nextColor
+    return number_color_dict[digitToUseForColor]
 
 def drawHorizontalBorders():
     for i in range(0, NUMBER_OF_ROWS + 1):
