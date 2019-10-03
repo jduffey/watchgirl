@@ -5,8 +5,8 @@ constants = {
     'BORDER_THICKNESS' : 10,
     'ICON_SIZE_X' : 50,
     'ICON_SIZE_Y' : 50,
-    'NUMBER_OF_COLUMNS' : 8,
-    'NUMBER_OF_ROWS' : 4,
+    'NUM_COLS' : 8,
+    'NUM_ROWS' : 4,
     'MY_RED' : (255, 0, 0),
     'MY_ORANGE' : (255, 127, 0),
     'MY_YELLOW' : (255, 255, 0),
@@ -18,3 +18,22 @@ constants = {
     'MY_BLACK' : (0, 0, 0),
     'MY_WHITE':  (255, 255, 255),
     }
+
+number_color_dict = {
+    '0': constants['MY_RED'],
+    '1': constants['MY_RED'],
+    '2': constants['MY_ORANGE'],
+    '3': constants['MY_ORANGE'],
+    '4': constants['MY_YELLOW'],
+    '5': constants['MY_YELLOW'],
+    '6': constants['MY_GREEN'],
+    '7': constants['MY_GREEN'],
+    '8': constants['MY_BLUE'],
+    '9': constants['MY_BLUE'],
+    'a': constants['MY_VIOLET'],
+    'b': constants['MY_VIOLET'],
+    'c': constants['MY_BROWN'],
+    'd': constants['MY_BROWN'],
+    'e': constants['MY_GREY'],
+    'f': constants['MY_GREY']
+}
