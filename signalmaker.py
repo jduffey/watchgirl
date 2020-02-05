@@ -7,7 +7,7 @@ from config import number_color_dict
 
 
 def get_color(digit_to_use_for_color):
-    return number_color_dict[digit_to_use_for_color]
+    return number_color_dict[str(int(digit_to_use_for_color, 16) % 8)]
 
 def draw_horizontal_borders():
     for i in range(0, const['NUM_ROWS'] + 1):
