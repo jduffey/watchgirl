@@ -15,11 +15,11 @@ def test_generate_digest_returns_the_full_hash():
 
 def test_generate_digest_returns_portion_of_digest():
     totp_time = [9000, 8675309]
-    totp_secret = ["it's over", "rick springfield"]
+    totp_secret = ["it's over", "Tommy Tutone"]
     totp_portion = [4, 8]
 
     expected = ["748a",
-                "6a27d981"]
+                "bb755c15"]
 
     for i in range(len(expected)):
         actual = totp.generate_digest(totp_time[i], totp_secret[i], totp_portion[i])
