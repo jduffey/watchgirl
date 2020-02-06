@@ -1,11 +1,9 @@
 import pygame
 from pygame.locals import *
 import time
-import jedhash
+import totp
 from config import constants as const
 from config import number_color_dict
-
-import totp
 
 
 def get_color(digit_to_use_for_color):
@@ -35,10 +33,6 @@ def draw_color_icon(which_column, which_row, digit_to_use_for_color):
     pygame.draw.rect(screen, get_color(digit_to_use_for_color), the_rectangle_to_draw)
 
 
-def generate_digest(time_offset):
-    return jedhash.return_the_hash(time_offset)
-
-
 def update_display():
     pygame.display.flip()
 
@@ -63,19 +57,19 @@ update_display()
 pygame.init()
 is_drawing_active = True
 
+digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
+loop_counter = 0
+
 app_start_time = time.time()
 print('\n*** APP START ***')
 print(f'Start Time: {app_start_time}')
-
-digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
-loop_counter = 0
 
 while is_drawing_active:
 
     loop_counter += 1
 
     if loop_counter > 1:
-        loop_start_time = time.time()
+        loop_start_time = int(time.time())
     else:
         loop_start_time = app_start_time - (app_start_time % const['PERIOD_IN_SECONDS'])
         sleep_between_loops()
