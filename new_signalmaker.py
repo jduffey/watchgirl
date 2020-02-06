@@ -39,27 +39,12 @@ def generate_digest(time_offset):
     return jedhash.return_the_hash(time_offset)
 
 
-def establish_start_time():
-    the_time = time.time() - (time.time() % const['PERIOD_IN_SECONDS'])
-    return int(the_time)
-
-
 def update_display():
     pygame.display.flip()
 
 
-def print_frame_details():
-    print('\nLoop start: ' + str(loop_start_time))
-    print('  ..as int: ' + str(int(loop_start_time)))
-    print('  ms taken: ' + str(milliseconds_of_loop))
-    print('   digests: ' + str(digests_generated_this_loop))
-    digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
-    print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET'], digest_portion))
-    [print(x) for x in outer_list]
-
-
 def sleep_between_loops():
-    time.sleep(const['PERIOD_IN_SECONDS'] - ((time.time() - start_time) % const['PERIOD_IN_SECONDS']))
+    time.sleep(const['PERIOD_IN_SECONDS'] - ((time.time() - loop_start_time) % const['PERIOD_IN_SECONDS']))
 
 
 # Main app functionality below
@@ -78,34 +63,38 @@ update_display()
 pygame.init()
 is_drawing_active = True
 
-start_time = establish_start_time()
-print(start_time)
+app_start_time = time.time()
+print('\n*** APP START ***')
+print(f'Start Time: {app_start_time}')
+
+digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
+loop_counter = 0
 
 while is_drawing_active:
 
-    loop_start_time = int(time.time())
-    digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
-    my_digest = totp.generate_digest(loop_start_time, const['SECRET'], digest_portion)
-    print(f'Loop start time: {loop_start_time}')
+    loop_counter += 1
 
-    digests_generated_this_loop = 0
+    if loop_counter > 1:
+        loop_start_time = time.time()
+    else:
+        loop_start_time = app_start_time - (app_start_time % const['PERIOD_IN_SECONDS'])
+        sleep_between_loops()
+        continue
+
+    print(f'\nLoop start: {loop_start_time}')
+    print('  ..as int: ' + str(int(loop_start_time)))
+
+    loop_digest = totp.generate_digest(loop_start_time, const['SECRET'], digest_portion)
+
     digest_char_counter = 0
 
     outer_list = []
-
     for which_row in range(0, const['NUM_ROWS']):
 
         inner_list = []
-
         for which_column in range(0, const['NUM_COLS']):
 
-            # digest_time_offset = const['PERIOD_IN_SECONDS'] * (which_column - which_row)
-
-            # digest_to_use_for_current_icon = generate_digest(digest_time_offset)
-            # digests_generated_this_loop += 1
-
-            # digit_to_use_for_color = digest_to_use_for_current_icon[0]
-            digit_to_use_for_color = my_digest[digest_char_counter]
+            digit_to_use_for_color = loop_digest[digest_char_counter]
             digest_char_counter += 1
 
             draw_color_icon(which_column, which_row, digit_to_use_for_color)
@@ -118,9 +107,12 @@ while is_drawing_active:
     draw_vertical_borders()
     update_display()
 
-    milliseconds_of_loop = 1000 * (time.time() - loop_start_time)
+    microseconds_of_loop = 1000 * 1000 * (time.time() - loop_start_time)
 
-    print_frame_details()
+    print('  μs taken: ' + str(microseconds_of_loop))
+    digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
+    print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET'], digest_portion))
+    [print(x) for x in outer_list]
 
     # if the 'X' button is pressed the window should close:
     gotten_events = pygame.event.get()
