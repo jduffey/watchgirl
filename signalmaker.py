@@ -76,7 +76,6 @@ while is_drawing_active:
         continue
 
     print(f'\nLoop start: {loop_start_time}')
-    print('  ..as int: ' + str(int(loop_start_time)))
 
     loop_digest = totp.generate_digest(loop_start_time, const['SECRET'], digest_portion)
 
@@ -103,7 +102,7 @@ while is_drawing_active:
 
     microseconds_of_loop = 1000 * 1000 * (time.time() - loop_start_time)
 
-    print('  μs taken: ' + str(microseconds_of_loop))
+    print('   micro s: ' + str(microseconds_of_loop))
     digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
     print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET'], digest_portion))
     [print(x) for x in outer_list]
