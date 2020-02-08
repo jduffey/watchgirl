@@ -12,11 +12,13 @@ constants = {
     'MY_GREEN' : (0, 255, 0),
     'MY_BLUE' : (0, 0, 255),
     'MY_BLACK' : (0, 0, 0),
+    'MY_WHITE' : (255, 255, 255)
     }
 
 number_color_dict = {
     '0': constants['MY_RED'],
-    '1': constants['MY_YELLOW'],
-    '2': constants['MY_GREEN'],
-    '3': constants['MY_BLUE']
+    '1': constants['MY_GREEN'],
+    '2': constants['MY_BLUE'],
+    '3': constants['MY_WHITE'],
+    #'3': constants['MY_YELLOW'],
 }
