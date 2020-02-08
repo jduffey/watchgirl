@@ -13,8 +13,9 @@ def hash_me(string_input):
 def generate_digest(time, secret, portion=64):
 
     sha_inner = hash_me(secret + str(time))
-    hashed_inner_as_hex_string = sha_inner.hexdigest()
-    sha_outer = hash_me(secret + hashed_inner_as_hex_string)
+    inner_hex_digest = sha_inner.hexdigest()
+
+    sha_outer = hash_me(secret + inner_hex_digest)
     outer_hex_digest = sha_outer.hexdigest()
 
     return outer_hex_digest[:portion]
