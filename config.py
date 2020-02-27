@@ -1,5 +1,7 @@
 constants = {
-    'SECRET' : 'PRIVATE_KEY_GOES_HERE',
+    'SECRET_01' : 'aaa',
+    'SECRET_02' : 'bbb',
+    'SECRET_03' : 'ccc',
     'PERIOD_IN_SECONDS' : 5,
     'WINDOW_TITLE' : 'Bank Vault #1',
     'BORDER_THICKNESS' : 10,
@@ -21,3 +23,4 @@ number_color_dict = {
     '2': constants['MY_BLUE'],
     '3': constants['MY_WHITE'],
 }
+

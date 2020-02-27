@@ -89,7 +89,7 @@ while is_unicorn_active:
     print(unicorn.get_rotation())
     print(f'\nLoop start: {loop_start_time}')
 
-    loop_digest = totp.generate_digest(loop_start_time, const['SECRET'], digest_portion)
+    loop_digest = totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion)
     print(f'    Digest: {loop_digest}')
 
     fill_4_squares()
