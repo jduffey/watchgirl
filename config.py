@@ -20,5 +20,4 @@ number_color_dict = {
     '1': constants['MY_GREEN'],
     '2': constants['MY_BLUE'],
     '3': constants['MY_WHITE'],
-    #'3': constants['MY_YELLOW'],
 }
