@@ -77,7 +77,7 @@ while is_drawing_active:
 
     print(f'\nLoop start: {loop_start_time}')
 
-    loop_digest = totp.generate_digest(loop_start_time, const['SECRET'], digest_portion)
+    loop_digest = totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion)
 
     digest_char_counter = 0
 
@@ -104,7 +104,7 @@ while is_drawing_active:
 
     print('   micro s: ' + str(microseconds_of_loop))
     digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
-    print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET'], digest_portion))
+    print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion))
     [print(x) for x in outer_list]
 
     # if the 'X' button is pressed the window should close:
