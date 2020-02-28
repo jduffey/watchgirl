@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 import unicornhathd as unicorn
 import time
 import totp
@@ -26,7 +27,6 @@ def synchronize_time():
     command = 'sudo ntpdate -s'
     target = 'time.nist.gov'
     print(f'Syncing time with {target}')
-
     os.system(command + ' ' + target)
 
 
@@ -56,6 +56,8 @@ def sleep_between_loops():
     time.sleep(const['PERIOD_IN_SECONDS'] - ((time.time() - loop_start_time) % const['PERIOD_IN_SECONDS']))
 
 
+print(f'Secret: {sys.argv[1]} "{const[sys.argv[1]]}"')
+
 width, height = unicorn.get_shape()
 unicorn.set_layout(unicorn.AUTO)
 
@@ -77,25 +79,28 @@ print(f'Start Time: {app_start_time}')
 
 while is_unicorn_active:
 
-    loop_counter += 1
-
     if loop_counter > 1:
-        loop_start_time = int(time.time())
+        loop_counter += 1
+        actual_start_time = time.time()
+        loop_start_time = int(actual_start_time)
     else:
+        loop_counter += 1
         loop_start_time = app_start_time - (app_start_time % const['PERIOD_IN_SECONDS'])
         sleep_between_loops()
         continue
 
-    print(f'\nLoop start: {loop_start_time}')
+    loop_digest = totp.generate_digest(loop_start_time, const[sys.argv[1]], digest_portion)
 
-    loop_digest = totp.generate_digest(loop_start_time, const['SECRET'], digest_portion)
-    print(f'    Digest: {loop_digest}')
+    print(f'\n Loop count: {loop_counter}')
+    print(f'Actual time: {actual_start_time}')
+    print(f'   Time msg: {loop_start_time}')
+    print(f'     Digest: {loop_digest}')
 
     fill_4_squares()
 
     end_time = time.time()
-    ms_of_loop = 1000 * (end_time - loop_start_time)
-    print(f'        ms: {str(ms_of_loop)}')
-    print(f'      Time: {end_time}')
+    ms_of_loop = 1000 * (actual_start_time - loop_start_time)
+    print(f'         ms: {str(ms_of_loop)}')
+    print(f'   End time: {end_time}')
 
     sleep_between_loops()
