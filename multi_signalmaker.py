@@ -43,7 +43,7 @@ def sleep_between_loops():
 
 # Main app functionality below
 APP_X_SIZE = const['BORDER_THICKNESS'] +\
-             const['NUM_COLS'] * (const['ICON_SIZE_X'] + const['BORDER_THICKNESS'])
+             const['NUM_COLS'] * 3 * (const['ICON_SIZE_X'] + const['BORDER_THICKNESS'])
 APP_Y_SIZE = const['BORDER_THICKNESS'] +\
              const['NUM_ROWS'] * (const['ICON_SIZE_Y'] + const['BORDER_THICKNESS'])
 
@@ -77,35 +77,33 @@ while is_drawing_active:
 
     print(f'\nLoop start: {loop_start_time}')
 
-    loop_digest = totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion)
+    loop_digest_01 = totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion)
+    loop_digest_02 = totp.generate_digest(loop_start_time, const['SECRET_02'], digest_portion)
+    loop_digest_03 = totp.generate_digest(loop_start_time, const['SECRET_03'], digest_portion)
+    loop_digests = [loop_digest_01, loop_digest_02, loop_digest_03]
 
-    digest_char_counter = 0
+    signal_placement = 0
+    for loop_digest in loop_digests:
 
-    outer_list = []
-    for which_row in range(0, const['NUM_ROWS']):
+        digest_char_counter = 0
+        for which_row in range(0, const['NUM_ROWS']):
+            for which_column in range(0, const['NUM_COLS']):
+                digit_to_use_for_color = loop_digest[digest_char_counter]
+                digest_char_counter += 1
+                draw_color_icon(which_column + signal_placement, which_row, digit_to_use_for_color)
+        signal_placement += 2
 
-        inner_list = []
-        for which_column in range(0, const['NUM_COLS']):
-
-            digit_to_use_for_color = loop_digest[digest_char_counter]
-            digest_char_counter += 1
-
-            draw_color_icon(which_column, which_row, digit_to_use_for_color)
-
-            inner_list.append(digit_to_use_for_color)
-
-        outer_list.append(inner_list)
 
     draw_horizontal_borders()
     draw_vertical_borders()
     update_display()
 
-    microseconds_of_loop = 1000 * 1000 * (time.time() - loop_start_time)
+    # microseconds_of_loop = 1000 * 1000 * (time.time() - loop_start_time)
 
-    print('   micro s: ' + str(microseconds_of_loop))
-    digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
-    print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion))
-    [print(x) for x in outer_list]
+    # print('   micro s: ' + str(microseconds_of_loop))
+    # digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
+    # print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET_03'], digest_portion))
+    # [print(x) for x in outer_list]
 
     # if the 'X' button is pressed the window should close:
     gotten_events = pygame.event.get()
