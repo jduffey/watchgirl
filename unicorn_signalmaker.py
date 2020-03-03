@@ -10,8 +10,8 @@ import os
 
 
 def startup_pixels():
-    for pairing in [(0, const['MY_WHITE']), (90, (255, 255, 0)),
-                    (180, (0, 255, 255)), (270, (255, 0, 255))]:
+    for pairing in [(0, const['WHITE']), (90, const['YELLOW']),
+                    (180, const['CYAN']), (270, const['MAGENTA'])]:
         unicorn.rotation(pairing[0])
         for i in range(width):
             unicorn.set_pixel(i, i, *pairing[1])
