@@ -1,12 +1,21 @@
 #!/usr/bin/env python3
 
+try:
+    import unicornhat as unicorn
+    print('\n*** Unicornhat 8x8 ***\n')
+except:
+    try:
+        import unicornhathd as unicorn
+        print('\n*** Unicornhat HD 16x16 ***\n')
+    except:
+        print('\n*** ERROR: No Unicornhat module detected ***\n')
+
+import os
 import sys
-import unicornhathd as unicorn
 import time
 import totp
 from config import constants as const
 from config import number_color_dict
-import os
 
 
 def startup_pixels():
