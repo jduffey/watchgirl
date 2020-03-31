@@ -38,13 +38,13 @@ def update_display():
     pygame.display.flip()
 
 
-def job():
+def job(digest_portion):
     now_time = time.time()
     loop_time = int(now_time)
-    print(f'Time is:    {now_time}')
+    print(f'  Time is:  {now_time}')
     print(f'Loop time:  {loop_time}\n')
 
-    loop_digest = totp.generate_digest(loop_time, const['SECRET_01'], 4)
+    loop_digest = totp.generate_digest(loop_time, const['SECRET_01'], digest_portion)
 
     digest_char_counter = 0
 
@@ -75,20 +75,8 @@ def job():
     [print(x) for x in outer_list]
 
 
-schedule.every().minute.at(":00").do(job)
-schedule.every().minute.at(":05").do(job)
-schedule.every().minute.at(":10").do(job)
-schedule.every().minute.at(":15").do(job)
-schedule.every().minute.at(":20").do(job)
-schedule.every().minute.at(":25").do(job)
-schedule.every().minute.at(":30").do(job)
-schedule.every().minute.at(":35").do(job)
-schedule.every().minute.at(":40").do(job)
-schedule.every().minute.at(":45").do(job)
-schedule.every().minute.at(":50").do(job)
-schedule.every().minute.at(":55").do(job)
-
 digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
+
 APP_X_SIZE = const['BORDER_THICKNESS'] +\
              const['NUM_COLS'] * (const['ICON_SIZE_X'] + const['BORDER_THICKNESS'])
 APP_Y_SIZE = const['BORDER_THICKNESS'] +\
@@ -102,6 +90,19 @@ screen.blit(rectangle_that_is_the_size_of_the_screen, (0, 0))
 update_display()
 
 pygame.init()
+
+schedule.every().minute.at(":00").do(job, digest_portion)
+schedule.every().minute.at(":05").do(job, digest_portion)
+schedule.every().minute.at(":10").do(job, digest_portion)
+schedule.every().minute.at(":15").do(job, digest_portion)
+schedule.every().minute.at(":20").do(job, digest_portion)
+schedule.every().minute.at(":25").do(job, digest_portion)
+schedule.every().minute.at(":30").do(job, digest_portion)
+schedule.every().minute.at(":35").do(job, digest_portion)
+schedule.every().minute.at(":40").do(job, digest_portion)
+schedule.every().minute.at(":45").do(job, digest_portion)
+schedule.every().minute.at(":50").do(job, digest_portion)
+schedule.every().minute.at(":55").do(job, digest_portion)
 
 print('\n*** APP START ***')
 print(f'Digest portion: {digest_portion}')
