@@ -1,16 +1,26 @@
 #!/usr/bin/env python3
 
-import unicornhathd as unicorn
+try:
+    import unicornhat as unicorn
+    print('\n*** Unicornhat 8x8 ***\n')
+except:
+    try:
+        import unicornhathd as unicorn
+        print('\n*** Unicornhat HD 16x16 ***\n')
+    except:
+        print('\n*** ERROR: No Unicornhat module detected ***\n')
+
+import os
+import sys
 import time
 import totp
 from config import constants as const
 from config import number_color_dict
-import os
 
 
 def startup_pixels():
-    for pairing in [(0, const['MY_WHITE']), (90, (255, 255, 0)),
-                    (180, (0, 255, 255)), (270, (255, 0, 255))]:
+    for pairing in [(0, const['WHITE']), (90, const['YELLOW']),
+                    (180, const['CYAN']), (270, const['MAGENTA'])]:
         unicorn.rotation(pairing[0])
         for i in range(width):
             unicorn.set_pixel(i, i, *pairing[1])
@@ -26,7 +36,6 @@ def synchronize_time():
     command = 'sudo ntpdate -s'
     target = 'time.nist.gov'
     print(f'Syncing time with {target}')
-
     os.system(command + ' ' + target)
 
 
@@ -56,6 +65,8 @@ def sleep_between_loops():
     time.sleep(const['PERIOD_IN_SECONDS'] - ((time.time() - loop_start_time) % const['PERIOD_IN_SECONDS']))
 
 
+print(f'Secret: {sys.argv[1]} "{const[sys.argv[1]]}"')
+
 width, height = unicorn.get_shape()
 unicorn.set_layout(unicorn.AUTO)
 
@@ -77,25 +88,28 @@ print(f'Start Time: {app_start_time}')
 
 while is_unicorn_active:
 
-    loop_counter += 1
-
     if loop_counter > 1:
-        loop_start_time = int(time.time())
+        loop_counter += 1
+        actual_start_time = time.time()
+        loop_start_time = int(actual_start_time)
     else:
+        loop_counter += 1
         loop_start_time = app_start_time - (app_start_time % const['PERIOD_IN_SECONDS'])
         sleep_between_loops()
         continue
 
-    print(f'\nLoop start: {loop_start_time}')
+    loop_digest = totp.generate_digest(loop_start_time, const[sys.argv[1]], digest_portion)
 
-    loop_digest = totp.generate_digest(loop_start_time, const['SECRET'], digest_portion)
-    print(f'    Digest: {loop_digest}')
+    print(f'\n Loop count: {loop_counter}')
+    print(f'Actual time: {actual_start_time}')
+    print(f'   Time msg: {loop_start_time}')
+    print(f'     Digest: {loop_digest}')
 
     fill_4_squares()
 
     end_time = time.time()
-    ms_of_loop = 1000 * (end_time - loop_start_time)
-    print(f'        ms: {str(ms_of_loop)}')
-    print(f'      Time: {end_time}')
+    ms_of_loop = 1000 * (actual_start_time - loop_start_time)
+    print(f'         ms: {str(ms_of_loop)}')
+    print(f'   End time: {end_time}')
 
     sleep_between_loops()

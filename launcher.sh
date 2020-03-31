@@ -9,5 +9,5 @@
 
 cd /
 cd home/pi/watchgirl
-sudo python3 unicorn_signalmaker.py
+sudo python3 unicorn_signalmaker.py SECRET_GOES_HERE
 cd /

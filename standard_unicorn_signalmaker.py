@@ -1,6 +1,12 @@
 #!/usr/bin/env python3
 
-import unicornhat as unicorn
+try:
+    import unicornhat as unicorn
+except ExplicitException:
+    try:
+        import unicornhathd as unicorn
+    except:
+        pass
 import time
 import totp
 from config import constants as const
