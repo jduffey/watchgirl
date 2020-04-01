@@ -4,6 +4,7 @@ import time
 import totp
 from config import constants as const
 from config import number_color_dict
+import schedule
 
 
 def get_color(digit_to_use_for_color):
@@ -37,49 +38,15 @@ def update_display():
     pygame.display.flip()
 
 
-def sleep_between_loops():
-    time.sleep(const['PERIOD_IN_SECONDS'] - ((time.time() - loop_start_time) % const['PERIOD_IN_SECONDS']))
+def job(digest_portion):
+    start_time = time.time()
+    loop_time = int(start_time)
+    print(f'  Time is:  {start_time}')
+    print(f'Loop time:  {loop_time}\n')
 
-
-# Main app functionality below
-APP_X_SIZE = const['BORDER_THICKNESS'] +\
-             const['NUM_COLS'] * 3 * (const['ICON_SIZE_X'] + const['BORDER_THICKNESS'])
-APP_Y_SIZE = const['BORDER_THICKNESS'] +\
-             const['NUM_ROWS'] * (const['ICON_SIZE_Y'] + const['BORDER_THICKNESS'])
-
-screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
-pygame.display.set_caption(const['WINDOW_TITLE'])
-pygame.mouse.set_visible(True)
-rectangle_that_is_the_size_of_the_screen = pygame.Surface(screen.get_size())
-screen.blit(rectangle_that_is_the_size_of_the_screen, (0, 0))
-update_display()
-
-pygame.init()
-is_drawing_active = True
-
-digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
-loop_counter = 0
-
-app_start_time = time.time()
-print('\n*** APP START ***')
-print(f'Start Time: {app_start_time}')
-
-while is_drawing_active:
-
-    loop_counter += 1
-
-    if loop_counter > 1:
-        loop_start_time = int(time.time())
-    else:
-        loop_start_time = app_start_time - (app_start_time % const['PERIOD_IN_SECONDS'])
-        sleep_between_loops()
-        continue
-
-    print(f'\nLoop start: {loop_start_time}')
-
-    loop_digest_01 = totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion)
-    loop_digest_02 = totp.generate_digest(loop_start_time, const['SECRET_02'], digest_portion)
-    loop_digest_03 = totp.generate_digest(loop_start_time, const['SECRET_03'], digest_portion)
+    loop_digest_01 = totp.generate_digest(loop_time, const['SECRET_01'], digest_portion)
+    loop_digest_02 = totp.generate_digest(loop_time, const['SECRET_02'], digest_portion)
+    loop_digest_03 = totp.generate_digest(loop_time, const['SECRET_03'], digest_portion)
     loop_digests = [loop_digest_01, loop_digest_02, loop_digest_03]
 
     signal_placement = 0
@@ -98,18 +65,44 @@ while is_drawing_active:
     draw_vertical_borders()
     update_display()
 
-    # microseconds_of_loop = 1000 * 1000 * (time.time() - loop_start_time)
+    microseconds_of_loop = 1000 * 1000 * (time.time() - start_time)
 
-    # print('   micro s: ' + str(microseconds_of_loop))
-    # digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
-    # print('      TOTP: ' + totp.generate_digest(loop_start_time, const['SECRET_03'], digest_portion))
-    # [print(x) for x in outer_list]
+    print('   micro s: ' + str(microseconds_of_loop))
+    digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
+    print('      TOTP: ' + totp.generate_digest(loop_time, const['SECRET_03'], digest_portion))
 
-    # if the 'X' button is pressed the window should close:
-    gotten_events = pygame.event.get()
-    print(f'DEBUG Events: {gotten_events}')
-    if gotten_events:
-        if gotten_events[0].type == QUIT:
-            is_drawing_active = False
 
-    sleep_between_loops()
+digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
+
+APP_X_SIZE = const['BORDER_THICKNESS'] +\
+             const['NUM_COLS'] * 3 * (const['ICON_SIZE_X'] + const['BORDER_THICKNESS'])
+APP_Y_SIZE = const['BORDER_THICKNESS'] +\
+             const['NUM_ROWS'] * (const['ICON_SIZE_Y'] + const['BORDER_THICKNESS'])
+
+screen = pygame.display.set_mode((APP_X_SIZE, APP_Y_SIZE))
+pygame.display.set_caption(const['WINDOW_TITLE'])
+pygame.mouse.set_visible(True)
+rectangle_that_is_the_size_of_the_screen = pygame.Surface(screen.get_size())
+screen.blit(rectangle_that_is_the_size_of_the_screen, (0, 0))
+update_display()
+
+pygame.init()
+
+schedule.every().minute.at(":00").do(job, digest_portion)
+schedule.every().minute.at(":05").do(job, digest_portion)
+schedule.every().minute.at(":10").do(job, digest_portion)
+schedule.every().minute.at(":15").do(job, digest_portion)
+schedule.every().minute.at(":20").do(job, digest_portion)
+schedule.every().minute.at(":25").do(job, digest_portion)
+schedule.every().minute.at(":30").do(job, digest_portion)
+schedule.every().minute.at(":35").do(job, digest_portion)
+schedule.every().minute.at(":40").do(job, digest_portion)
+schedule.every().minute.at(":45").do(job, digest_portion)
+schedule.every().minute.at(":50").do(job, digest_portion)
+schedule.every().minute.at(":55").do(job, digest_portion)
+
+print('\n*** APP START ***')
+print(f'Start Time: {time.time()}')
+
+while True:
+    schedule.run_pending()
