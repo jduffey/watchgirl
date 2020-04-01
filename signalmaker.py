@@ -15,14 +15,14 @@ def draw_horizontal_borders():
     for i in range(0, const['NUM_ROWS'] + 1):
         top_left_Y = i * (const['BORDER_THICKNESS'] + const['ICON_SIZE_Y'])
         the_rectangle_to_draw = (0, top_left_Y, APP_X_SIZE, const['BORDER_THICKNESS'])
-        pygame.draw.rect(screen, const['MY_BLACK'], the_rectangle_to_draw)
+        pygame.draw.rect(screen, const['BLACK'], the_rectangle_to_draw)
 
 
 def draw_vertical_borders():
     for i in range(0, const['NUM_COLS'] + 1):
         top_left_X = i * (const['BORDER_THICKNESS'] + const['ICON_SIZE_X'])
         the_rectangle_to_draw = (top_left_X, 0, const['BORDER_THICKNESS'], APP_Y_SIZE)
-        pygame.draw.rect(screen, const['MY_BLACK'], the_rectangle_to_draw)
+        pygame.draw.rect(screen, const['BLACK'], the_rectangle_to_draw)
 
 
 def draw_color_icon(which_column, which_row, digit_to_use_for_color):
@@ -39,9 +39,9 @@ def update_display():
 
 
 def job(digest_portion):
-    now_time = time.time()
-    loop_time = int(now_time)
-    print(f'  Time is:  {now_time}')
+    start_time = time.time()
+    loop_time = int(start_time)
+    print(f'  Time is:  {start_time}')
     print(f'Loop time:  {loop_time}\n')
 
     loop_digest = totp.generate_digest(loop_time, const['SECRET_01'], digest_portion)
@@ -67,7 +67,7 @@ def job(digest_portion):
     draw_vertical_borders()
     update_display()
 
-    microseconds_of_loop = 1000 * 1000 * (time.time() - loop_time)
+    microseconds_of_loop = 1000 * 1000 * (time.time() - start_time)
 
     print('   micro s: ' + str(microseconds_of_loop))
     digest_portion = const['NUM_COLS'] * const['NUM_ROWS']
