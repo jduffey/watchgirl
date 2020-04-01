@@ -14,14 +14,14 @@ def draw_horizontal_borders():
     for i in range(0, const['NUM_ROWS'] + 1):
         top_left_Y = i * (const['BORDER_THICKNESS'] + const['ICON_SIZE_Y'])
         the_rectangle_to_draw = (0, top_left_Y, APP_X_SIZE, const['BORDER_THICKNESS'])
-        pygame.draw.rect(screen, const['MY_BLACK'], the_rectangle_to_draw)
+        pygame.draw.rect(screen, const['BLACK'], the_rectangle_to_draw)
 
 
 def draw_vertical_borders():
     for i in range(0, const['NUM_COLS'] + 1):
         top_left_X = i * (const['BORDER_THICKNESS'] + const['ICON_SIZE_X'])
         the_rectangle_to_draw = (top_left_X, 0, const['BORDER_THICKNESS'], APP_Y_SIZE)
-        pygame.draw.rect(screen, const['MY_BLACK'], the_rectangle_to_draw)
+        pygame.draw.rect(screen, const['BLACK'], the_rectangle_to_draw)
 
 
 def draw_color_icon(which_column, which_row, digit_to_use_for_color):
