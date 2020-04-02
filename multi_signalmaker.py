@@ -8,7 +8,7 @@ import schedule
 
 
 def get_color(digit_to_use_for_color):
-    return number_color_dict[str(int(digit_to_use_for_color, 16) % 4)]
+    return number_color_dict[int(digit_to_use_for_color, 16) % 4]
 
 
 def draw_horizontal_borders():
