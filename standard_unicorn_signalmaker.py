@@ -45,15 +45,15 @@ def fill_square(bottom_left, bottom_right, top_left, top_right, r, g, b):
     unicorn.show()
 
 
-def fill_4_squares(loop_digest):
-        # bottom right
-        fill_square(0, height//2, width//2, width, *get_color(str(loop_digest[3])))
-        # top right
-        fill_square(0, height//2, 0, width//2, *get_color(str(loop_digest[1])))
-        # bottom left
-        fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[2])))
+def fill_4_squares_standard(loop_digest):
         # top left
-        fill_square(height//2, height, 0, width//2, *get_color(str(loop_digest[0])))
+        fill_square(0, height//2, 0, width//2, *get_color(str(loop_digest[0])))
+        # top right
+        fill_square(0, height//2, width//2, width, *get_color(str(loop_digest[1])))
+        # bottom left
+        fill_square(height//2, height, 0, width//2, *get_color(str(loop_digest[2])))
+        # bottom right
+        fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[3])))
 
 
 def get_color(digit_to_use_for_color):
@@ -69,12 +69,13 @@ def job(digest_portion):
     print(f'Loop time:  {loop_time}')
     print(f'   Digest:  {loop_digest}\n')
 
-    fill_4_squares(loop_digest)
+    unicorn.clear()
+    fill_4_squares_standard(loop_digest)
 
 
 width, height = unicorn.get_shape()
 unicorn.set_layout(unicorn.AUTO)
-unicorn.brightness(0.5) # needs to be above ~0.20 to power LEDs
+unicorn.brightness(0.3) # needs to be above ~0.20 to power LEDs
 unicorn.rotation(0)
 
 digest_portion = 4
