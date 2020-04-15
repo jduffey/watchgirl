@@ -20,8 +20,8 @@ constants = {
     }
 
 number_color_dict = {
-    '0': constants['RED'],
-    '1': constants['GREEN'],
-    '2': constants['BLUE'],
-    '3': constants['WHITE'],
+    0: constants['RED'],
+    1: constants['GREEN'],
+    2: constants['BLUE'],
+    3: constants['WHITE'],
 }

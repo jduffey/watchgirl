@@ -12,11 +12,13 @@ import totp
 from config import constants as const
 from config import number_color_dict
 import os
+import sys
+import schedule
 
 
 def startup_pixels():
-    for pairing in [(0, const['MY_WHITE']), (90, (255, 255, 0)),
-                    (180, (0, 255, 255)), (270, (255, 0, 255))]:
+    for pairing in [(0, const['WHITE']), (90, const['YELLOW']),
+                    (180, const['CYAN']), (270, const['MAGENTA'])]:
         unicorn.rotation(pairing[0])
         for i in range(width):
             unicorn.set_pixel(i, i, *pairing[1])
@@ -43,66 +45,62 @@ def fill_square(bottom_left, bottom_right, top_left, top_right, r, g, b):
     unicorn.show()
 
 
-def fill_4_squares():
-        # bottom right
-        fill_square(0, height//2, width//2, width, *get_color(str(loop_digest[3])))
-        # top right
-        fill_square(0, height//2, 0, width//2, *get_color(str(loop_digest[1])))
-        # bottom left
-        fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[2])))
+def fill_4_squares_standard(loop_digest):
         # top left
-        fill_square(height//2, height, 0, width//2, *get_color(str(loop_digest[0])))
+        fill_square(0, height//2, 0, width//2, *get_color(str(loop_digest[0])))
+        # top right
+        fill_square(0, height//2, width//2, width, *get_color(str(loop_digest[1])))
+        # bottom left
+        fill_square(height//2, height, 0, width//2, *get_color(str(loop_digest[2])))
+        # bottom right
+        fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[3])))
 
 
 def get_color(digit_to_use_for_color):
-    return number_color_dict[str(int(digit_to_use_for_color, 16) % 4)]
+    return number_color_dict[int(digit_to_use_for_color, 16) % 4]
 
 
-def sleep_between_loops():
-    time.sleep(const['PERIOD_IN_SECONDS'] - ((time.time() - loop_start_time) % const['PERIOD_IN_SECONDS']))
+def job(digest_portion):
+    start_time = time.time()
+    loop_time = int(start_time)
+    loop_digest = totp.generate_digest(loop_time, const[sys.argv[1]], digest_portion)
+
+    print(f'  Time is:  {start_time}')
+    print(f'Loop time:  {loop_time}')
+    print(f'   Digest:  {loop_digest}\n')
+
+    unicorn.clear()
+    fill_4_squares_standard(loop_digest)
 
 
 width, height = unicorn.get_shape()
 unicorn.set_layout(unicorn.AUTO)
+unicorn.brightness(0.3) # needs to be above ~0.20 to power LEDs
+unicorn.rotation(0)
+
+digest_portion = 4
+
+print(f'Secret: {sys.argv[1]} "{const[sys.argv[1]]}"')
 
 startup_pixels()
 
-unicorn.brightness(0.5) # needs to be above ~0.20 to power LEDs
-unicorn.rotation(0)
-
 synchronize_time()
 
-is_unicorn_active = True
+schedule.every().minute.at(":00").do(job, digest_portion)
+schedule.every().minute.at(":05").do(job, digest_portion)
+schedule.every().minute.at(":10").do(job, digest_portion)
+schedule.every().minute.at(":15").do(job, digest_portion)
+schedule.every().minute.at(":20").do(job, digest_portion)
+schedule.every().minute.at(":25").do(job, digest_portion)
+schedule.every().minute.at(":30").do(job, digest_portion)
+schedule.every().minute.at(":35").do(job, digest_portion)
+schedule.every().minute.at(":40").do(job, digest_portion)
+schedule.every().minute.at(":45").do(job, digest_portion)
+schedule.every().minute.at(":50").do(job, digest_portion)
+schedule.every().minute.at(":55").do(job, digest_portion)
 
-digest_portion = 4
-loop_counter = 0
-
-app_start_time = time.time()
 print('\n*** APP START ***')
-print(f'Start Time: {app_start_time}')
+print(f'   Time is: {time.time()}\n')
 
-while is_unicorn_active:
-
-    loop_counter += 1
-
-    if loop_counter > 1:
-        loop_start_time = int(time.time())
-    else:
-        loop_start_time = app_start_time - (app_start_time % const['PERIOD_IN_SECONDS'])
-        sleep_between_loops()
-        continue
-
-    print(unicorn.get_rotation())
-    print(f'\nLoop start: {loop_start_time}')
-
-    loop_digest = totp.generate_digest(loop_start_time, const['SECRET_01'], digest_portion)
-    print(f'    Digest: {loop_digest}')
-
-    fill_4_squares()
-
-    end_time = time.time()
-    ms_of_loop = 1000 * (end_time - loop_start_time)
-    print(f'        ms: {str(ms_of_loop)}')
-    print(f'      Time: {end_time}')
-
-    sleep_between_loops()
+while True:
+    schedule.run_pending()
