@@ -46,16 +46,22 @@ def fill_square(bottom_left, bottom_right, top_left, top_right, r, g, b):
             unicorn.set_pixel(x,y,r,g,b)
     unicorn.show()
 
+def fill_all(r, g, b):
+    unicorn.set_all(r, g, b)
+    unicorn.show()
 
-def fill_4_squares(loop_digest):
-    # top left
-    fill_square(0, height//2, width//2, width, *get_color(str(loop_digest[0])))
-    # top right
-    fill_square(0, height//2, 0, width//2, *get_color(str(loop_digest[1])))
-    # bottom left
-    fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[2])))
-    # bottom right
-    fill_square(height//2, height, 0, width//2, *get_color(str(loop_digest[3])))
+def fill_board(loop_digest, digest_portion):
+    if digest_portion == 4:
+        # top left
+        fill_square(0, height//2, width//2, width, *get_color(str(loop_digest[0])))
+        # top right
+        fill_square(0, height//2, 0, width//2, *get_color(str(loop_digest[1])))
+        # bottom left
+        fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[2])))
+        # bottom right
+        fill_square(height//2, height, 0, width//2, *get_color(str(loop_digest[3])))
+    if digest_portion == 1:
+        fill_all(*get_color(str(loop_digest[0])))
 
 
 def get_color(digit_to_use_for_color):
@@ -71,13 +77,16 @@ def job(digest_portion):
     print(f'Loop time:  {loop_time}')
     print(f'   Digest:  {loop_digest}')
 
-    fill_4_squares(loop_digest)
+    fill_board(loop_digest, digest_portion)
 
     ms_of_loop = 1000 * (time.time() - start_time)
     print(f'       ms:  {str(ms_of_loop)}\n')
 
 
-print(f'Secret: {sys.argv[1]} "{const[sys.argv[1]]}"')
+print(f'Secret:  {sys.argv[1]} "{const[sys.argv[1]]}"')
+print(f'Squares: {sys.argv[2]}')
+
+digest_portion = int(sys.argv[2])
 
 width, height = unicorn.get_shape()
 unicorn.set_layout(unicorn.AUTO)
@@ -85,11 +94,9 @@ unicorn.set_layout(unicorn.AUTO)
 startup_pixels()
 
 unicorn.brightness(0.5) # needs to be above ~0.20 to power LEDs
-unicorn.rotation(0)
+unicorn.rotation(0) # ensure rotation has been reset
 
 synchronize_time()
-
-digest_portion = 4
 
 schedule.every().minute.at(":00").do(job, digest_portion)
 schedule.every().minute.at(":05").do(job, digest_portion)
