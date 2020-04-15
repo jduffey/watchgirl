@@ -10,10 +10,10 @@ except ExplicitException:
 import time
 import totp
 from config import constants as const
-from config import number_color_dict
-import os
 import sys
 import schedule
+from utils import synchronize_time
+from utils import get_color
 
 
 def startup_pixels():
@@ -30,22 +30,15 @@ def startup_pixels():
             time.sleep(0.04)
 
 
-def synchronize_time():
-    command = 'sudo ntpdate -s'
-    target = 'time.nist.gov'
-    print(f'Syncing time with {target}')
-
-    os.system(command + ' ' + target)
-
-
 def fill_square(bottom_left, bottom_right, top_left, top_right, r, g, b):
     for y in range(bottom_left, bottom_right):
         for x in range(top_left, top_right):
             unicorn.set_pixel(x,y,r,g,b)
     unicorn.show()
 
-def fill_all(r, g, b):
-    unicorn.set_all(r, g, b)
+
+def fill_all(color):
+    unicorn.set_all(*color)
     unicorn.show()
 
 
@@ -60,11 +53,7 @@ def fill_board(loop_digest, digest_portion):
         # bottom right
         fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[3])))
     if digest_portion == 1:
-        fill_all(*get_color(str(loop_digest)))
-
-
-def get_color(digit_to_use_for_color):
-    return number_color_dict[int(digit_to_use_for_color, 16) % 4]
+        fill_all(get_color(str(loop_digest)))
 
 
 def job(digest_portion):
@@ -85,10 +74,13 @@ unicorn.set_layout(unicorn.AUTO)
 unicorn.brightness(0.3) # needs to be above ~0.20 to power LEDs
 unicorn.rotation(0)
 
+script = sys.argv[0]
+secret = sys.argv[1]
 digest_portion = int(sys.argv[2])
 
-print(f'Secret:  {sys.argv[1]} "{const[sys.argv[1]]}"')
-print(f'Squares: {sys.argv[2]}')
+print(f'\nRunning: {script}')
+print(f'Secret:  {secret}: "{const[secret]}"')
+print(f'Squares: {digest_portion}\n')
 
 startup_pixels()
 
