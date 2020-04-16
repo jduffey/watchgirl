@@ -7,13 +7,14 @@ except ExplicitException:
         import unicornhathd as unicorn
     except:
         pass
+import math
 import time
 import totp
-from config import constants as const
-import sys
 import schedule
-from utils import synchronize_time
+import sys
+from config import constants as const
 from utils import get_color
+from utils import synchronize_time
 
 
 def startup_pixels():
@@ -30,9 +31,9 @@ def startup_pixels():
             time.sleep(0.04)
 
 
-def fill_square(b_left, b_right, t_left, t_right, color):
-    for y in range(b_left, b_right):
-        for x in range(t_left, t_right):
+def fill_square_standard_unicorn(t_left, t_right, b_left, b_right, color):
+    for x in range(t_left, t_right):
+        for y in range(b_left, b_right):
             unicorn.set_pixel(x, y, *color)
     unicorn.show()
 
@@ -43,15 +44,14 @@ def fill_all(color):
 
 
 def fill_board(loop_digest, digest_portion):
-    if digest_portion == 4:
-        for i in range(digest_portion):
-            b_left = i//2 * height//2
-            b_right = (i + 2)//2 * height//2
-            t_left = (i % 2) * width//2
-            t_right = ((i % 2) + 1) * width//2
-            fill_square(b_left, b_right, t_left, t_right, get_color(str(loop_digest[i])))
-    if digest_portion == 1:
-        fill_all(get_color(str(loop_digest)))
+    sq = int(math.sqrt(digest_portion))
+    for i in range(digest_portion):
+        t_left = (i % sq) * width//sq
+        t_right = ((i % sq) + 1) * width//sq
+        b_left = (i//sq * height//sq)
+        b_right = (i + sq)//sq * height//sq
+        fill_square_standard_unicorn(t_left, t_right, b_left, b_right, \
+                                     get_color(str(loop_digest[i])))
 
 
 def job(digest_portion):
@@ -59,7 +59,7 @@ def job(digest_portion):
     loop_time = int(start_time)
     loop_digest = totp.generate_digest(loop_time, const[sys.argv[1]], digest_portion)
 
-    print(f'  Time is:  {start_time}')
+    print(f'     Time:  {start_time}')
     print(f'Loop time:  {loop_time}')
     print(f'   Digest:  {loop_digest}\n')
 
@@ -67,17 +67,23 @@ def job(digest_portion):
     fill_board(loop_digest, digest_portion)
 
 
-width, height = unicorn.get_shape()
-unicorn.set_layout(unicorn.AUTO)
-unicorn.brightness(0.3) # needs to be above ~0.20 to power LEDs
-unicorn.rotation(0)
+allowed_square_sizes = ['1', '4', '16', '64']
+if sys.argv[2] not in allowed_square_sizes:
+    print(f'INVALID SQUARES ARG: {sys.argv[2]}')
+    print(f'Standard Unicorn Hat squares arg must be in {allowed_square_sizes}\nEXIT')
+    exit()
 
 script = sys.argv[0]
 secret = sys.argv[1]
 digest_portion = int(sys.argv[2])
 
+width, height = unicorn.get_shape()
+unicorn.set_layout(unicorn.AUTO)
+unicorn.brightness(0.3) # needs to be above ~0.20 to power LEDs
+unicorn.rotation(0)
+
 print(f'\nRunning: {script}')
-print(f'Secret:  {secret}: "{const[secret]}"')
+print(f' Secret:  {secret} "{const[secret]}"')
 print(f'Squares: {digest_portion}\n')
 
 startup_pixels()
@@ -98,7 +104,7 @@ schedule.every().minute.at(":50").do(job, digest_portion)
 schedule.every().minute.at(":55").do(job, digest_portion)
 
 print('\n*** APP START ***')
-print(f'   Time is: {time.time()}\n')
+print(f'     Time: {time.time()}\n')
 
 while True:
     schedule.run_pending()
