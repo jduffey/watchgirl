@@ -18,15 +18,15 @@ from utils import synchronize_time
 
 
 def startup_pixels():
-    for pairing in [(0, const['WHITE']), (90, const['YELLOW']),
+    for pair in [(0, const['WHITE']), (90, const['YELLOW']),
                     (180, const['CYAN']), (270, const['MAGENTA'])]:
-        unicorn.rotation(pairing[0])
+        unicorn.rotation(pair[0])
         for i in range(width):
-            unicorn.set_pixel(i, i, *pairing[1])
+            unicorn.set_pixel(i, i, *pair[1])
             for y in range(height):
-                unicorn.set_pixel(i, y, *pairing[1])
+                unicorn.set_pixel(i, y, *pair[1])
             for x in range(width):
-                unicorn.set_pixel(x, i, *pairing[1])
+                unicorn.set_pixel(x, i, *pair[1])
             unicorn.show()
             time.sleep(0.04)
 
@@ -35,11 +35,6 @@ def fill_square_standard_unicorn(t_left, t_right, b_left, b_right, color):
     for x in range(t_left, t_right):
         for y in range(b_left, b_right):
             unicorn.set_pixel(x, y, *color)
-    unicorn.show()
-
-
-def fill_all(color):
-    unicorn.set_all(*color)
     unicorn.show()
 
 
@@ -58,11 +53,9 @@ def job(digest_portion):
     start_time = time.time()
     loop_time = int(start_time)
     loop_digest = totp.generate_digest(loop_time, const[sys.argv[1]], digest_portion)
-
     print(f'     Time:  {start_time}')
     print(f'Loop time:  {loop_time}')
     print(f'   Digest:  {loop_digest}\n')
-
     unicorn.clear()
     fill_board(loop_digest, digest_portion)
 
