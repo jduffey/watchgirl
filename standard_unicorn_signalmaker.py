@@ -30,10 +30,10 @@ def startup_pixels():
             time.sleep(0.04)
 
 
-def fill_square(bottom_left, bottom_right, top_left, top_right, r, g, b):
+def fill_square(bottom_left, bottom_right, top_left, top_right, color):
     for y in range(bottom_left, bottom_right):
         for x in range(top_left, top_right):
-            unicorn.set_pixel(x,y,r,g,b)
+            unicorn.set_pixel(x, y, *color)
     unicorn.show()
 
 
@@ -44,14 +44,12 @@ def fill_all(color):
 
 def fill_board(loop_digest, digest_portion):
     if digest_portion == 4:
-        # top left
-        fill_square(0, height//2, 0, width//2, *get_color(str(loop_digest[0])))
-        # top right
-        fill_square(0, height//2, width//2, width, *get_color(str(loop_digest[1])))
-        # bottom left
-        fill_square(height//2, height, 0, width//2, *get_color(str(loop_digest[2])))
-        # bottom right
-        fill_square(height//2, height, width//2, width, *get_color(str(loop_digest[3])))
+        for i in range(digest_portion):
+            fill_square(i//2 * height//2, \
+                        (i + 2)//2 * height//2, \
+                        (i % 2) * width//2, \
+                        ((i % 2) + 1) * width//2, \
+                        get_color(str(loop_digest[i])))
     if digest_portion == 1:
         fill_all(get_color(str(loop_digest)))
 
