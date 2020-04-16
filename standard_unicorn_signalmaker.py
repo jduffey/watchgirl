@@ -45,11 +45,11 @@ def fill_all(color):
 def fill_board(loop_digest, digest_portion):
     if digest_portion == 4:
         for i in range(digest_portion):
-            fill_square(i//2 * height//2, \
-                        (i + 2)//2 * height//2, \
-                        (i % 2) * width//2, \
-                        ((i % 2) + 1) * width//2, \
-                        get_color(str(loop_digest[i])))
+            b_left = i//2 * height//2
+            b_right = (i + 2)//2 * height//2
+            t_left = (i % 2) * width//2
+            t_right = ((i % 2) + 1) * width//2
+            fill_square(b_left, b_right, t_left, t_right, get_color(str(loop_digest[i])))
     if digest_portion == 1:
         fill_all(get_color(str(loop_digest)))
 
