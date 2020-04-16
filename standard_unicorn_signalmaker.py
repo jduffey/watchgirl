@@ -30,9 +30,9 @@ def startup_pixels():
             time.sleep(0.04)
 
 
-def fill_square(bottom_left, bottom_right, top_left, top_right, color):
-    for y in range(bottom_left, bottom_right):
-        for x in range(top_left, top_right):
+def fill_square(b_left, b_right, t_left, t_right, color):
+    for y in range(b_left, b_right):
+        for x in range(t_left, t_right):
             unicorn.set_pixel(x, y, *color)
     unicorn.show()
 
